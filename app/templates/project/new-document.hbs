@@ -1,0 +1,20 @@
+<div class="row" id="project-new-document">
+  <div class="col-md-6">
+
+    <h1>Add a new document</h1>
+
+    <form {{action 'save' this on='submit'}}>
+      <div class="form-group">
+        {{input value=title class="form-control" placeholder="Document title"}}
+      </div>
+
+      Paste the content of document here:
+      {{view 'contenteditable' value=text}}
+
+      <div class="btn-toolbar">
+        {{link-to 'Cancel' 'project.index' class="btn btn-default"}}
+        <button class="btn btn-primary" type="submit">Save</button>
+      </div>
+    </form>
+  </div>
+</div>

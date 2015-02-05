@@ -1,0 +1,32 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-9">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Labello</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
+      <ul class="nav navbar-nav">
+        {{#link-to 'project.index' project tagName="li"}}<a href="#">{{project.name}}</a>{{/link-to}}
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{#if document}}{{document.title}}{{else}}Documents{{/if}} <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            {{#each project.documents}}
+              {{#link-to 'document' this tagName="li"}}<a href="#">{{title}}</a>{{/link-to}}
+            {{/each}}
+            <li class="divider"></li>
+            {{#link-to 'project.newDocument' project tagName="li"}}<a href="#">Add a new document</a>{{/link-to}}
+          </ul>
+          <li><a href="#">Labels</a></li>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

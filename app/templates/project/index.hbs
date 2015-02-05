@@ -1,0 +1,15 @@
+<div class="row" >
+  <div class="col-md-4">
+    <h3>Project: {{input value=name}}</h3>
+    <h4>Documents</h4>
+    <ul class="list-group">
+    {{#each documents}}
+      <li class="list-group-item">
+        {{link-to title 'document' this}}
+        <button class="btn btn-default btn-xs edit-btn pull-right">Delete</button>
+      </li>
+    {{/each}}
+    </ul>
+    {{link-to 'Add a document' 'project.newDocument' class="btn btn-primary"}}
+  </div>
+</div>

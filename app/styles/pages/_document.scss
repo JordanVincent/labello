@@ -1,0 +1,21 @@
+#document {
+  .project-label {
+    &:hover .edit-btn {
+      display: inline-block;
+    }
+    .edit-btn {
+      display: none;
+    }
+  }
+  .selection {
+    &:hover .btn {
+      display: inline-block;
+    }
+    .btn {
+      display: none;
+      &.delete-btn {
+        margin-left: 5px;
+      }
+    }
+  }
+}
