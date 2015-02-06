@@ -27,6 +27,9 @@
         </li>
         {{#link-to 'labels' project tagName="li"}}<a href="#">Labels</a>{{/link-to}}
       </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li {{action 'exportProject'}}><a href="#">Export</a></li>
+      </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

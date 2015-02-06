@@ -56,7 +56,7 @@ DocumentRoute = Ember.Route.extend
 
       label.get('selections').then (selections) =>
         Ember.RSVP.all(selections.map (selection) =>
-          @deleteSelection(selection) # Carefull, self destructing array
+          @deleteSelection(selection) # Careful, self destructing array
         ).then ->
           category.get('labels').removeObject(label) if category
           project.get('labels').removeObject(label)

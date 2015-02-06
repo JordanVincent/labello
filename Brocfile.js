@@ -8,6 +8,7 @@ var app = new EmberApp({
   }
 });
 
+app.import('bower_components/comma-separated-values/csv.js');
 app.import('bower_components/pleasejs/src/Please.js');
 
 // Use `app.import` to add additional libraries to the generated

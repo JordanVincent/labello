@@ -13,6 +13,7 @@
     "ember-qunit": "0.1.8",
     "ember-qunit-notifications": "0.0.4",
     "qunit": "~1.15.0",
-    "pleasejs": "~0.4.2"
+    "pleasejs": "~0.4.2",
+    "comma-separated-values": "~3.6.1"
   }
 }
