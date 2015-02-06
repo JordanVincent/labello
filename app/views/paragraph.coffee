@@ -8,7 +8,7 @@ ParagraphView = Em.View.extend
 
   valueChanged: (->
     @setContent()
-  ).observes('value.text', 'value.selections.[]', 'value.selections.[].label')
+  ).observes('value.text', 'value.selections.[]', 'value.selections.@each.label')
 
   mouseUp: (event) ->
 

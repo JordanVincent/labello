@@ -4,6 +4,7 @@ LabelEditModalController = Ember.ObjectController.extend
 
   actions:
     cancel: ->
+      @get('model').rollback()
       @send('closeModal')
 
     save: ->
