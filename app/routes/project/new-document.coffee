@@ -10,7 +10,8 @@ ProjectNewDocumentRoute = Ember.Route.extend
 
     paragraphs = []
     blocks.each (index, block) =>
-      paragraphs.addObject @createParagraph doc, $(block)
+      unless Ember.isBlank $(block).text()
+        paragraphs.addObject @createParagraph doc, $(block)
     paragraphs
 
   createParagraph: (doc, $block) ->
