@@ -1,9 +1,9 @@
 `import DS from "ember-data";`
 
 Project = DS.Model.extend
-  documents: DS.hasMany('document')
-  categories: DS.hasMany('category')
-  labels: DS.hasMany('label')
+  documents: DS.hasMany('document', {async: true})
+  categories: DS.hasMany('category', {async: true})
+  labels: DS.hasMany('label', {async: true})
   name: DS.attr()
 
 Project.reopenClass

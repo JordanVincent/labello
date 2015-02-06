@@ -2,7 +2,7 @@
 
 ProjectNewDocumentRoute = Ember.Route.extend
   model: (params) ->
-    @store.createRecord('document', { text: ''})
+    @store.createRecord('document', { text: '', title: 'Untilted Document'})
 
   generateParagraphs: (doc) ->
     text = '<div>' + doc.get('text') + '</div>'

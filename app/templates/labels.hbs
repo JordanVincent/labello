@@ -1,7 +1,10 @@
 <div id="labels">
   <div class="pane labels-pane">
     {{#each categories}}
-      <div class="category-item">{{name}}</div>
+      <div class="category-item">
+        {{name}}
+        <button {{action 'deleteCategory' this}} class="btn btn-default btn-xs pull-right delete-btn">Delete</button>
+      </div>
       {{#each labels}}
         {{#link-to 'label' this class="label-item" tagName="div"}}
           {{name}}

@@ -40,10 +40,21 @@
 
   .label-item {
     padding: 10px 15px 10px 35px;
+    cursor: pointer;
   }
 
   .category-item {
     font-weight: bold;
     padding: 5px 15px;
+    background-color: $list-group-hover-bg;
+
+    &:hover {
+      .delete-btn {
+        display: block;
+      }
+    }
+    .delete-btn {
+      display: none;
+    }
   }
 }
