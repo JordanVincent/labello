@@ -15,7 +15,8 @@ ProjectNewDocumentRoute = Ember.Route.extend
 
   createParagraph: (doc, $block) ->
     @store.createRecord 'paragraph',
-      tagName: $block.prop('tagName')
+      # tagName: $block.prop('tagName')
+      tagName: 'p'
       text: $block.text()
       document: doc
 
