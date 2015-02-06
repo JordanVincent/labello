@@ -1,8 +1,8 @@
 `import DS from "ember-data";`
 
 Selection = DS.Model.extend
-  label: DS.belongsTo('label', {async: true})
-  paragraph: DS.belongsTo('paragraph', {async: true})
+  label: DS.belongsTo('label')
+  paragraph: DS.belongsTo('paragraph')
 
   startPosition: DS.attr()
   endPosition: DS.attr()
