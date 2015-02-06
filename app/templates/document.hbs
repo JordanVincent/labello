@@ -8,6 +8,7 @@
         <div class="panel-heading">
           {{#if category}}{{view 'colored-text' color=color text=category.name}}&nbsp;/&nbsp;{{/if}}{{view 'colored-text' color=color text=name}}&nbsp;
           <span class="badge">{{selections.length}}</span>
+          <button class="btn btn-default btn-xs delete-btn pull-right" {{action 'deleteLabel' this}}>Delete</button>
           <button class="btn btn-default btn-xs edit-btn pull-right" {{action 'editLabel' this}}>Edit</button>
         </div>
 

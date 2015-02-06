@@ -23,6 +23,15 @@ DocumentRoute = Ember.Route.extend
       selection.save().then ->
         Ember.RSVP.all [label.save(), paragraph.save()]
 
+  deleteSelection: (selection) ->
+    paragraph = selection.get('paragraph')
+    label = selection.get('label')
+    paragraph.get('selections').removeObject(selection)
+    label.get('selections').removeObject(selection)
+
+    Ember.RSVP.all([paragraph.save(), label.save()]).then ->
+      selection.destroyRecord()
+
   actions:
     createSelection: (label, paragraph, startPosition, endPosition) ->
       @createSelection(label, paragraph, startPosition, endPosition)
@@ -41,7 +50,24 @@ DocumentRoute = Ember.Route.extend
         project.save().then =>
           @createSelection(label, paragraph, startPosition, endPosition)
 
+    deleteLabel: (label) ->
+      category = label.get('category')
+      project = label.get('project')
+
+      label.get('selections').then (selections) =>
+        Ember.RSVP.all(selections.map (selection) =>
+          @deleteSelection(selection) # Carefull, self destructing array
+        ).then ->
+          category.get('labels').removeObject(label) if category
+          project.get('labels').removeObject(label)
+
+          promises = [project.save()]
+          promises.addObject(category.save()) if category
+
+          Ember.RSVP.all(promises).then ->
+            label.destroyRecord()
+
     deleteSelection: (selection) ->
-      selection.destroyRecord()
+      @deleteSelection(selection)
 
 `export default DocumentRoute`
