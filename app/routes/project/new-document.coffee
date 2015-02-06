@@ -2,7 +2,7 @@
 
 ProjectNewDocumentRoute = Ember.Route.extend
   model: (params) ->
-    @store.createRecord('document')
+    @store.createRecord('document', { text: ''})
 
   generateParagraphs: (doc) ->
     text = '<div>' + doc.get('text') + '</div>'
@@ -22,12 +22,15 @@ ProjectNewDocumentRoute = Ember.Route.extend
   actions:
     save: (doc) ->
       paragraphs = @generateParagraphs(doc)
-      console.log paragraphs
+
       project = @controllerFor('project').get('content')
       project.get('documents').addObject(doc)
 
-      doc.save().then =>
-        project.save().then =>
-          @transitionTo('project')
+      Ember.RSVP.all(paragraphs.map (paragraph) =>
+        paragraph.save()
+      ).then =>
+        doc.save().then =>
+          project.save().then =>
+            @transitionTo('project')
 
 `export default ProjectNewDocumentRoute`

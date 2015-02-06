@@ -6,4 +6,7 @@ ProjectIndexRoute = Ember.Route.extend
     deleteDocument: (doc) ->
       doc.destroyRecord()
 
+    saveProject: ->
+      @modelFor('project').save()
+
 `export default ProjectIndexRoute`

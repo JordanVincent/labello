@@ -5,9 +5,12 @@ ProjectsRoute = Ember.Route.extend
     @store.find('project')
 
   actions:
-    new: ->
+    newProject: ->
       project = @store.createRecord('project', { name: 'Untilted Project'})
       project.save().then =>
         @transitionTo('project', project)
+
+    deleteProject: (project) ->
+      project.destroyRecord()
 
 `export default ProjectsRoute`

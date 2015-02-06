@@ -23,14 +23,22 @@
 
   <div class="row" >
     <div class="col-md-4">
-      <h1>Projects</h1>
-      <ul class="list-group">
-      {{#each}}
-        {{link-to name 'project' this tagName="li" class="list-group-item"}}
-      {{/each}}
-      </ul>
+      <h3>Projects</h3>
+      <hr>
 
-      <button class="btn btn-primary" {{action 'new'}}>New project</button>
+      <ul class="list-group">
+        {{#each}}
+          <li class="list-group-item">
+            {{link-to name 'project' this}}
+            <button class="btn btn-default btn-xs pull-right" {{action 'deleteProject' this}}>Delete</button>
+          </li>
+        {{/each}}
+      </ul>
+      {{#unless length}}
+        <p>No projects yet, add one!</p>
+      {{/unless}}
+
+      <button class="btn btn-primary" {{action 'newProject'}}>New project</button>
     </div>
   </div>
 </div>

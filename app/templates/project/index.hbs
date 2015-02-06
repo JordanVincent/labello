@@ -1,20 +1,33 @@
 <div class="container-fluid">
   <div class="row" >
     <div class="col-md-4">
-      <h3>Project: {{input value=name}}</h3>
-      <h4>Documents</h4>
-      <ul class="list-group">
-      {{#each documents}}
-        <li class="list-group-item">
-          {{link-to title 'document' this}}
-          <button class="btn btn-default btn-xs edit-btn pull-right" {{action 'deleteDocument' this}}>Delete</button>
-        </li>
-      {{/each}}
-      {{#unless documents.length}}
-        No documents yet, add one!
-      {{/unless}}
-      </ul>
-      {{link-to 'Add a document' 'project.newDocument' class="btn btn-primary"}}
+
+      <div class="form-group">
+        {{input value=name class="form-control input-lg" placeholder="Label color" id="inputLabelColor"}}
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Documents
+          {{link-to 'Add a document' 'project.newDocument' class="btn btn-xs btn-primary pull-right"}}
+        </div>
+        <ul class="list-group">
+          {{#each documents}}
+            <li class="list-group-item">
+              {{link-to title 'document' this}}
+              <button class="btn btn-default btn-xs pull-right" {{action 'deleteDocument' this}}>Delete</button>
+            </li>
+          {{else}}
+            <li class="list-group-item">
+              No documents yet, add one!
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+
+      {{link-to 'Back' 'projects' class="btn btn-default"}}
+      <button class="btn btn-primary" {{action 'saveProject'}}>Save</button>
+
     </div>
   </div>
 </div>
