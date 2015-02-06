@@ -1,0 +1,12 @@
+<div id="label">
+  <div class="pane selections-pane">
+    {{#each selections}}
+      {{link-to text 'selection' this class="selection-item" tagName="div"}}
+    {{else}}
+      <div class="selection-item" >This label has no selection</div>
+    {{/each}}
+  </div>
+  <div class="pane document-pane">
+    {{outlet}}
+  </div>
+</div>

@@ -8,8 +8,8 @@ Label = DS.Model.extend
 
 Label.reopenClass
   FIXTURES: [
-    { id: 1, name: 'Motivations', project: 1, color: '#CC1144'}
-    { id: 2, name: 'Frustrations', project: 1, color: '#8855AA'}
+    { id: 1, name: 'Motivations', project: 1, color: '#CC1144', selections: [1,2]}
+    { id: 2, name: 'Frustrations', project: 1, color: '#8855AA', selections: [3,4]}
   ]
 
 `export default Label;`

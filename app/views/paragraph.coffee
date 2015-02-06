@@ -8,7 +8,7 @@ ParagraphView = Em.View.extend
 
   valueChanged: (->
     @setContent()
-  ).observes('value.text', 'value.selections.[]')
+  ).observes('value.text', 'value.selections.[]', 'value.selections.[].label')
 
   mouseUp: (event) ->
 
@@ -31,21 +31,8 @@ ParagraphView = Em.View.extend
       buffer = startPos
       startPos = endPos
       endPos = buffer
-    console.log offestPos, selection.anchorOffset, selection.extentOffset
+
     @get('parentView').send('selection', @get('value'), startPos, endPos, event)
-
-    # text = $(selection.anchorNode).parent().html()
-    # # console.log 'text', text
-    # start = text.slice(0, selection.anchorOffset)
-    # middle = text.slice(selection.anchorOffset, selection.extentOffset)
-    # end = text.slice(selection.extentOffset)
-
-    # newText = start + '<b>' + middle + '</b>' + end
-
-    # $(selection.anchorNode).parent().html(newText)
-    # console.log newText, $(selection.anchorNode)
-    # @sendAction('createLabel')
-    # @updateValue()
 
   isSelectionValid: (selection) ->
     (selection.type is 'Range') and
@@ -56,7 +43,7 @@ ParagraphView = Em.View.extend
 
     startPos = []
     endPos = []
- 
+
     @get('value.selections').sortBy('startPosition').reverse().forEach (selection) =>
 
       startPos = selection.get('startPosition')

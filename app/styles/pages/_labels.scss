@@ -1,0 +1,41 @@
+#labels {
+  width: 100%;
+  position: absolute;
+  margin-top: -70px;
+  padding-top: 50px;
+  height: 100%;
+
+  .pane {
+    float: left;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .labels-pane {
+    width: 20%;
+    border-right: 1px solid $gray-lighter;
+  }
+
+  .label-pane {
+    width: 80%;
+  }
+
+  .label-item {
+    border-bottom: 1px solid $gray-lighter;
+    padding: 15px;
+
+    &:hover {
+      background-color: $list-group-hover-bg;
+    }
+
+    &.active {
+      background-color: $list-group-active-bg;
+      color: $list-group-active-color;
+
+      .badge {
+        background-color: $badge-active-bg;
+        color: $badge-active-color;
+      }
+    }
+  }
+}

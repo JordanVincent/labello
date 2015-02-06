@@ -6,6 +6,7 @@ TextSelection = Ember.Component.extend
   popoverLeft: 0
   popoverDisplayed: false
   currentSelection: null
+  newLabelName: null
 
   popoverStyle: (->
     'top: ' + (@get('popoverTop') - 70) + 'px; left: ' + @get('popoverLeft') + 'px;'
@@ -42,5 +43,6 @@ TextSelection = Ember.Component.extend
       selection = @get('currentSelection')
       @sendAction('createLabel', labelName, selection.get('paragraph'), selection.get('startPos'), selection.get('endPos'))
       @dismissSelection()
+      @set('newLabelName', null)
 
 `export default TextSelection;`

@@ -1,0 +1,13 @@
+<div id="labels">
+  <div class="pane labels-pane">
+    {{#each}}
+      {{#link-to 'label' this class="label-item" tagName="div"}}
+        {{name}}
+        <span class="badge pull-right">{{selections.length}}</span>
+      {{/link-to}}
+    {{/each}}
+  </div>
+  <div class="pane label-pane">
+    {{outlet}}
+  </div>
+</div>

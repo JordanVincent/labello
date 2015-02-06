@@ -2,12 +2,17 @@
 
 html, body {
   margin: 0;
+  height: 100%;
 }
 
 body { padding-top: 70px; }
 
 @import "views/contenteditable";
 @import "components/text-selection";
+@import "components/modal-dialog";
 
 @import "pages/project-new-document";
+@import "pages/labels";
+@import "pages/label";
+@import "pages/selection";
 @import "pages/document";

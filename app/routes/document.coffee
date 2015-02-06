@@ -5,7 +5,10 @@ DocumentRoute = Ember.Route.extend
     @store.find('document', params.document_id)
 
   afterModel: (model) ->
-    model.get('paragraphs')
+    model.get('paragraphs').then (paragraphs) ->
+      a = paragraphs.map (paragraph) ->
+        paragraph.get('selections')
+      Ember.RSVP.all(a)
 
   createSelection: (label, paragraph, startPosition, endPosition) ->
       selection = @store.createRecord 'selection',
@@ -31,6 +34,7 @@ DocumentRoute = Ember.Route.extend
       label = @store.createRecord 'label',
         name: labelName
         project: project
+        color: Please.make_color()
 
       project.get('labels').addObject(label)
       @createSelection(label, paragraph, startPosition, endPosition)
