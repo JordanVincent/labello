@@ -5,8 +5,6 @@ LabelRoute = Ember.Route.extend
     @store.find('label', params.label_id)
 
   afterModel: (model) ->
-    model.get('selections').then (selections) ->
-      Ember.RSVP.all selections.map (selection) ->
-        selection.get('paragraph')
+    model.get('selections')
 
 `export default LabelRoute`
