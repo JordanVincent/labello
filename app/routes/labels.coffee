@@ -4,4 +4,8 @@ LabelsRoute = Ember.Route.extend
   model: (params) ->
     @modelFor('project').get('labels')
 
+  setupController: (controller, model) ->
+    @_super(controller, model)
+    controller.set 'categories', @modelFor('project').get('categories')
+
 `export default LabelsRoute`

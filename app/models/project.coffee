@@ -2,6 +2,7 @@
 
 Project = DS.Model.extend
   documents: DS.hasMany('document')
+  categories: DS.hasMany('category')
   labels: DS.hasMany('label')
   name: DS.attr()
 

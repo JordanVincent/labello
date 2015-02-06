@@ -12,7 +12,6 @@ TextSelection = Ember.Component.extend
     'top: ' + @get('popoverTop') + 'px; left: ' + (@get('popoverLeft') - 150) + 'px;'
   ).property('popoverTop', 'popoverLeft')
 
-
   showPopover: (event) ->
     @set('popoverTop', event.clientY)
     @set('popoverLeft', event.clientX)

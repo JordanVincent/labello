@@ -3,8 +3,27 @@
     <label for="inputLabelName">Label name</label>
     {{input value=name class="form-control" placeholder="Label name" id="inputLabelName"}}
   </div>
+
   <div class="form-group">
     <label for="inputLabelColor">Label color</label>
     {{input value=color class="form-control" placeholder="Label color" id="inputLabelColor"}}
   </div>
+
+  <div class="form-group">
+    <label for="inputCategory">Category</label>
+    {{view "select" value=category content=project.categories optionLabelPath="content.name" prompt="No category selected" class="form-control" id="inputCategory"}}
+  </div>
+
+  {{#if newCategoryDisplayed}}
+    <div class="well well-sm">
+      <div class="input-group">
+        {{input value=newCategoryName class="form-control" placeholder="Category name"}}
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button" {{action 'createNewCategory' newCategoryName}}>Create category</button>
+        </span>
+      </div>
+    </div>
+  {{else}}
+    <button class="btn btn-sm btn-link" {{action 'showNewCategory'}}>Create a new category</button>
+  {{/if}}
 {{/modal-dialog}}

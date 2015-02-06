@@ -6,7 +6,7 @@
     {{#each project.labels}}
       <div class="panel panel-default project-label">
         <div class="panel-heading">
-          {{view 'colored-text' color=color text=name}}&nbsp;
+          {{#if category}}{{view 'colored-text' color=color text=category.name}}&nbsp;/&nbsp;{{/if}}{{view 'colored-text' color=color text=name}}&nbsp;
           <span class="badge">{{selections.length}}</span>
           <button class="btn btn-default btn-xs edit-btn pull-right" {{action 'editLabel' this}}>Edit</button>
         </div>

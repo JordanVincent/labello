@@ -1,6 +1,17 @@
 <div id="labels">
   <div class="pane labels-pane">
-    {{#each}}
+    {{#each categories}}
+      <div class="category-item">{{name}}</div>
+      {{#each labels}}
+        {{#link-to 'label' this class="label-item" tagName="div"}}
+          {{name}}
+          <span class="badge pull-right">{{selections.length}}</span>
+        {{/link-to}}
+      {{/each}}
+    {{/each}}
+
+    <div class="category-item">Single labels</div>
+    {{#each singleLabels}}
       {{#link-to 'label' this class="label-item" tagName="div"}}
         {{name}}
         <span class="badge pull-right">{{selections.length}}</span>

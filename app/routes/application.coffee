@@ -14,4 +14,14 @@ ApplicationRoute = Ember.Route.extend
         outlet: 'modal'
         parentView: 'application'
 
+    createCategory: (categoryName, project) ->
+      category = @store.createRecord 'category',
+        name: categoryName
+        project: project
+
+      project.get('categories').addObject(category)
+
+      category.save().then ->
+        project.save()
+
 `export default ApplicationRoute`

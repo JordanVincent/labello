@@ -1,7 +1,7 @@
 `import Ember from 'ember';`
 
 SelectionMoveModalController = Ember.ObjectController.extend
-  needs: 'project',
+  needs: 'project'
   project: Ember.computed.alias('controllers.project')
 
   modelChanged: (->

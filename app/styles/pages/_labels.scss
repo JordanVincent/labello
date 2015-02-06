@@ -20,9 +20,8 @@
     width: 80%;
   }
 
-  .label-item {
+  .label-item, .category-item {
     border-bottom: 1px solid $gray-lighter;
-    padding: 15px;
 
     &:hover {
       background-color: $list-group-hover-bg;
@@ -37,5 +36,14 @@
         color: $badge-active-color;
       }
     }
+  }
+
+  .label-item {
+    padding: 10px 15px 10px 35px;
+  }
+
+  .category-item {
+    font-weight: bold;
+    padding: 5px 15px;
   }
 }
