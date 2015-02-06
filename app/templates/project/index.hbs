@@ -7,9 +7,12 @@
       {{#each documents}}
         <li class="list-group-item">
           {{link-to title 'document' this}}
-          <button class="btn btn-default btn-xs edit-btn pull-right">Delete</button>
+          <button class="btn btn-default btn-xs edit-btn pull-right" {{action 'deleteDocument' this}}>Delete</button>
         </li>
       {{/each}}
+      {{#unless documents.length}}
+        No documents yet, add one!
+      {{/unless}}
       </ul>
       {{link-to 'Add a document' 'project.newDocument' class="btn btn-primary"}}
     </div>
