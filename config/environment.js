@@ -9,8 +9,9 @@ module.exports = function(environment) {
 
     contentSecurityPolicy: {
       'script-src': "'self' 'unsafe-inline' 'unsafe-eval' http://www.google-analytics.com",
-      'style-src': "'self' 'unsafe-inline'",
-      'img-src': "'self' http://www.google-analytics.com"
+      'style-src': "'self' 'unsafe-inline' http://fonts.googleapis.com",
+      'img-src': "'self' http://www.google-analytics.com",
+      'font-src': "'self' http://fonts.gstatic.com"
     },
 
     EmberENV: {
