@@ -1,4 +1,27 @@
 #document {
+  width: 100%;
+  position: absolute;
+  margin-top: -70px;
+  padding-top: 50px;
+  height: 100%;
+
+  .pane {
+    float: left;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .paragraphs-pane {
+    width: 62%;
+    border-right: 1px solid $gray-lighter;
+    padding: 15px;
+  }
+
+  .labels-pane {
+    width: 38%;
+    padding: 15px;
+  }
+
   .project-label {
     &:hover .edit-btn {
       display: inline-block;

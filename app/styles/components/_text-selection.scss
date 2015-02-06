@@ -2,5 +2,13 @@
 
   .popover {
     position: absolute;
+    width: 300px;
+
+    .list-group-item {
+      cursor: pointer;
+      &:hover {
+        background-color: $list-group-hover-bg;
+      }
+    }
   }
 }

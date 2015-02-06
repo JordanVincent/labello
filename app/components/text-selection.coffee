@@ -9,7 +9,7 @@ TextSelection = Ember.Component.extend
   newLabelName: null
 
   popoverStyle: (->
-    'top: ' + (@get('popoverTop') - 70) + 'px; left: ' + @get('popoverLeft') + 'px;'
+    'top: ' + @get('popoverTop') + 'px; left: ' + (@get('popoverLeft') - 150) + 'px;'
   ).property('popoverTop', 'popoverLeft')
 
 

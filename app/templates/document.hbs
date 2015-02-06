@@ -1,29 +1,27 @@
-<div class="container-fluid">
-  <div class="row" id="document">
-    <div class="col-md-6">
-      {{text-selection paragraphs=paragraphs labels=project.labels createSelection="createSelection" createLabel="createLabel"}}
-    </div>
-    <div class="col-md-6">
-      {{#each project.labels}}
-        <div class="panel panel-default project-label">
-          <div class="panel-heading">
-            {{view 'colored-text' color=color text=name}}&nbsp;
-            <span class="badge">{{selections.length}}</span>
-            <button class="btn btn-default btn-xs edit-btn pull-right" {{action 'editLabel' this}}>Edit</button>
-          </div>
-
-          <ul class="list-group">
-            {{#each selections}}
-              <li class="list-group-item selection">
-                {{text}}
-                <button {{action 'deleteSelection' this}} class="btn btn-default btn-xs pull-right delete-btn">Delete</button>
-                <button {{action 'moveSelection' this}} class="btn btn-default btn-xs pull-right">Move</button>
-              </li>
-            {{/each}}
-          </ul>
+<div id="document">
+  <div class="pane paragraphs-pane">
+    {{text-selection paragraphs=paragraphs labels=project.labels createSelection="createSelection" createLabel="createLabel"}}
+  </div>
+  <div class="pane labels-pane">
+    {{#each project.labels}}
+      <div class="panel panel-default project-label">
+        <div class="panel-heading">
+          {{view 'colored-text' color=color text=name}}&nbsp;
+          <span class="badge">{{selections.length}}</span>
+          <button class="btn btn-default btn-xs edit-btn pull-right" {{action 'editLabel' this}}>Edit</button>
         </div>
-      {{/each}}
 
-    </div>
+        <ul class="list-group">
+          {{#each selections}}
+            <li class="list-group-item selection">
+              {{text}}
+              <button {{action 'deleteSelection' this}} class="btn btn-default btn-xs pull-right delete-btn">Delete</button>
+              <button {{action 'moveSelection' this}} class="btn btn-default btn-xs pull-right">Move</button>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    {{/each}}
+
   </div>
 </div>
