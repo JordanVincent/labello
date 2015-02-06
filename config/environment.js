@@ -6,6 +6,13 @@ module.exports = function(environment) {
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
+
+    contentSecurityPolicy: {
+      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' http://www.google-analytics.com",
+      'style-src': "'self' 'unsafe-inline'",
+      'img-src': "'self' http://www.google-analytics.com"
+    },
+
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -40,7 +47,9 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.googleAnalytics = {
+      webPropertyId: 'UA-59451798-1'
+    }
   }
 
   return ENV;
