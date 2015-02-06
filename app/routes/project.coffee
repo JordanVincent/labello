@@ -36,7 +36,6 @@ ProjectRoute = Ember.Route.extend
       project = @modelFor('project')
       @projectToCSV(project).then (csv) =>
         csvString = csv.encode()
-        console.log csvString
         name = project.get('name')
         @downloadCSV(name, csvString)
 
