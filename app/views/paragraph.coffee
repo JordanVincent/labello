@@ -54,7 +54,7 @@ ParagraphView = Em.View.extend
       middle = html.slice(startPos, endPos)
       end = html.slice(endPos)
 
-      html = start + '<span style="color:' + selection.get('label.color') + ';">' + middle + '</span>' + end
+      html = start + '<span id="' + selection.get('id') + '" style="color:' + selection.get('label.color') + ';">' + middle + '</span>' + end
 
     @$().html html
 
