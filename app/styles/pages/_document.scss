@@ -23,10 +23,10 @@
   }
 
   .project-label {
-    &:hover .btn {
+    &:hover .panel-heading .btn {
       display: inline-block;
     }
-    .btn {
+    .panel-heading .btn {
       display: none;
       &.delete-btn {
         margin-left: 5px;
@@ -35,6 +35,7 @@
   }
   .selection {
     cursor: pointer;
+
     &:hover {
       background-color: $list-group-hover-bg;
       .btn {
