@@ -8,6 +8,7 @@ Selection = DS.Model.extend
   endPosition: DS.attr()
 
   text: ( ->
+    return '' unless @get('paragraph.text')
     @get('paragraph.text').slice(@get('startPosition'), @get('endPosition'))
   ).property('paragraph', 'paragraph.text', 'startPosition', 'endPosition')
 
