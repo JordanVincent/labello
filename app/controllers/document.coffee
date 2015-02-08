@@ -19,7 +19,7 @@ DocumentController = Ember.ObjectController.extend
 
     selectSelection: (selection) ->
       $elem = $('#' + selection.get('id'))
-      return unless $elem
+      return if Ember.isBlank($elem);
       @set('selectedSelection', selection)
       @scrollToElement($elem)
 
