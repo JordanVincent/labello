@@ -19,6 +19,7 @@
   }
 
   .selection-item {
+    position: relative;
     cursor: pointer;
     border-bottom: 1px solid $gray-lighter;
     padding: 15px;
@@ -30,6 +31,14 @@
     &.active {
       background-color: $list-group-active-bg;
       color: $list-group-active-color;
+    }
+
+    .document-title {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      padding: 5px 10px;
+      font-size: 0.8em;
     }
   }
 }

@@ -2,10 +2,12 @@
 
 Selection = DS.Model.extend
   label: DS.belongsTo('label')
-  paragraph: DS.belongsTo('paragraph')
+  paragraph: DS.belongsTo('paragraph', {async: true})
 
   startPosition: DS.attr()
   endPosition: DS.attr()
+
+  document: Ember.computed.alias('paragraph.document')
 
   text: ( ->
     return '' unless @get('paragraph.text')

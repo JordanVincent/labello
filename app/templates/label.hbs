@@ -1,7 +1,10 @@
 <div id="label">
   <div class="pane selections-pane">
     {{#each selections}}
-      {{link-to text 'selection' this class="selection-item" tagName="div"}}
+      {{#link-to 'selection' this class="selection-item" tagName="div"}}
+        {{text}}
+        <span class="document-title">{{document.title}}</span>
+      {{/link-to}}
     {{else}}
       <div class="selection-item" >This label has no selection</div>
     {{/each}}
