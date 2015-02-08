@@ -2,7 +2,7 @@
 
 Label = DS.Model.extend
   project: DS.belongsTo('project')
-  category: DS.belongsTo('category')
+  category: DS.belongsTo('category', {async: true})
   selections: DS.hasMany('selection', {async: true})
 
   name: DS.attr()
