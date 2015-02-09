@@ -11,26 +11,30 @@ DocumentRoute = Ember.Route.extend
       Ember.RSVP.all(a)
 
   createSelection: (label, paragraph, startPosition, endPosition) ->
-      selection = @store.createRecord 'selection',
-        label: label
-        paragraph: paragraph
-        startPosition: startPosition
-        endPosition: endPosition
+    selection = @store.createRecord 'selection',
+      label: label
+      paragraph: paragraph
+      startPosition: startPosition
+      endPosition: endPosition
 
-      label.get('selections').addObject(selection)
-      paragraph.get('selections').addObject(selection)
+    label.get('selections').addObject(selection)
+    paragraph.get('selections').addObject(selection)
 
-      selection.save().then ->
-        Ember.RSVP.all [label.save(), paragraph.save()]
+    selection.save().then ->
+      Ember.RSVP.all [label.save(), paragraph.save()]
 
   deleteSelection: (selection) ->
-    paragraph = selection.get('paragraph')
-    label = selection.get('label')
-    paragraph.get('selections').removeObject(selection)
-    label.get('selections').removeObject(selection)
+    Ember.RSVP.all([
+      selection.get('paragraph'),
+      selection.get('label')
+    ]).then (resolved) ->
+      paragraph = resolved.objectAt(0)
+      label = resolved.objectAt(1)
+      paragraph.get('selections').removeObject(selection)
+      label.get('selections').removeObject(selection)
 
-    Ember.RSVP.all([paragraph.save(), label.save()]).then ->
-      selection.destroyRecord()
+      Ember.RSVP.all([paragraph.save(), label.save()]).then ->
+        selection.destroyRecord()
 
   actions:
     createSelection: (label, paragraph, startPosition, endPosition) ->
