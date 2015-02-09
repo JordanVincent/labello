@@ -7,11 +7,11 @@ Category = DS.Model.extend
 
   # We don't destroy labels
   destroyRecordAndRelations: ->
-    Ember.RSVP.all(category.get('labels').map (label) ->
-      label.set('category', null)
+    Ember.RSVP.all(@get('labels').toArray().map (label) =>
+      @get('labels').removeObject(label)
       label.save()
     ).then =>
-      category.get('project').then (project) =>
+      @get('project').then (project) =>
         project.get('categories').removeObject(@)
 
         project.save().then =>

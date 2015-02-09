@@ -6,6 +6,7 @@ LabelsRoute = Ember.Route.extend
 
   setupController: (controller, model) ->
     @_super(controller, model)
+
     controller.set 'categories', @modelFor('project').get('categories')
 
   actions:
