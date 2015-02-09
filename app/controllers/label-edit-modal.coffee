@@ -2,11 +2,17 @@
 
 LabelEditModalController = Ember.ObjectController.extend
   newCategoryDisplayed: false
+  newCategoryName: null
   creatingCategory: false
+
   oldCategory: null
+  newCategory: null
 
   modelChanged: (->
-    @set 'oldCategory', @get('model.category')
+    return unless @get('model')
+    @get('model.category').then (category) =>
+      @set 'oldCategory', category
+      @set 'newCategory', category
   ).observes('model')
 
   categoryAdded: (->
@@ -15,24 +21,49 @@ LabelEditModalController = Ember.ObjectController.extend
 
     lastCategory = @get('model.project.categories.lastObject')
     @get('model').set('category', lastCategory)
+    @set('newCategory', lastCategory)
+
     @set('newCategoryDisplayed', false)
   ).observes('model.project.categories.[]')
+
+  saveNewCategory: ->
+    label = @get('model')
+    @get('newCategory.labels').addObject(label)
+    @get('newCategory').save()
+
+  saveOldCategory: ->
+    label = @get('model')
+    @get('oldCategory.labels').removeObject(label)
+    @get('oldCategory').save()
+
+  closeModal: ->
+    @send('closeModal')
+    @set('newCategoryDisplayed', false)
+    @set('newCategoryName', null)
+    @set('model', null)
 
   actions:
     cancel: ->
       label = @get('model')
       label.rollback()
       if @get('oldCategory')
-        @get('oldCategory').get('labels').addObject(label)
-      else if label.get('category')
-        label.get('category.labels').removeObject(label)
+        @get('oldCategory.labels').addObject(label)
 
       label.save().then =>
-        @send('closeModal')
+        @closeModal()
 
     save: ->
       @get('model').save().then =>
-        @send('closeModal')
+        promisse = Ember.RSVP.resolve()
+
+        if @get('oldCategory')
+          promisse = @saveOldCategory().then =>
+            @saveNewCategory() if @get('newCategory')
+        else if @get('newCategory')
+          promisse = @saveNewCategory()
+
+        promisse.then =>
+          @closeModal()
 
     showNewCategory: ->
       @set('newCategoryDisplayed', true)

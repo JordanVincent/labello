@@ -17,7 +17,7 @@ SelectionMoveModalController = Ember.ObjectController.extend
   actions:
     cancel: ->
       selection = @get('model')
-      @get('oldLabel').get('selections').addObject(selection)
+      @get('oldLabel.selections').addObject(selection)
       selection.save().then =>
         @send('closeModal')
         @set('model', null)
@@ -25,12 +25,11 @@ SelectionMoveModalController = Ember.ObjectController.extend
     save: ->
       selection = @get('model')
       selection.save().then =>
-        @get('oldLabel').get('selections').removeObject(selection)
+        @get('oldLabel.selections').removeObject(selection)
         @get('oldLabel').save().then =>
 
-          newLabel = @get('newLabel')
-          newLabel.get('selections').addObject(selection)
-          newLabel.save().then =>
+          @get('newLabel.selections').addObject(selection)
+          @get('newLabel').save().then =>
             @send('closeModal')
             @set('model', null)
 
