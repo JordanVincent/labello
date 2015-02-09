@@ -7,4 +7,14 @@ Document = DS.Model.extend
 
   text: null #temporary
 
+  destroyRecordAndRelations: ->
+    @get('paragraphs').then (paragraphs) =>
+      Ember.RSVP.all(paragraphs.toArray().map (paragraph) ->
+        paragraph.destroyRecordAndRelations()
+      ).then =>
+        @get('project').then (project) =>
+          project.get('documents').removeObject(@)
+          project.save().then =>
+            @destroyRecord()
+
 `export default Document;`

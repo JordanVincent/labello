@@ -8,4 +8,8 @@ LabelsRoute = Ember.Route.extend
     @_super(controller, model)
     controller.set 'categories', @modelFor('project').get('categories')
 
+  actions:
+    deleteCategory: (category) ->
+      category.destroyRecordAndRelations()
+
 `export default LabelsRoute`

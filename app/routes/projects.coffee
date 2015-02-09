@@ -11,6 +11,6 @@ ProjectsRoute = Ember.Route.extend
         @transitionTo('project', project)
 
     deleteProject: (project) ->
-      project.destroyRecord()
+      project.destroyRecordAndRelations()
 
 `export default ProjectsRoute`

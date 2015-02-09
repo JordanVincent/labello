@@ -24,4 +24,18 @@ Selection = DS.Model.extend
     ]
   ).property('text', 'label.name', 'label.category.name', 'paragraph.document.title')
 
+  destroyRecordAndRelations: ->
+    Ember.RSVP.all([
+      @get('paragraph')
+      @get('label')
+    ]).then (resolved) =>
+      paragraph = resolved.objectAt(0)
+      label = resolved.objectAt(1)
+
+      paragraph.get('selections').removeObject(@)
+      label.get('selections').removeObject(@)
+
+      Ember.RSVP.all([paragraph.save(), label.save()]).then =>
+        @destroyRecord()
+
 `export default Selection;`
