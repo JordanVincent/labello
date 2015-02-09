@@ -17,7 +17,6 @@ Project = DS.Model.extend
       categories = resolved.objectAt(1)
       labels = resolved.objectAt(2)
 
-    @get('documents').then (documents) =>
       Ember.RSVP.all(documents.toArray().map (doc) ->
         doc.destroyRecordAndRelations()
       ).then =>
