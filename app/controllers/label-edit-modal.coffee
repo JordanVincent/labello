@@ -2,16 +2,21 @@
 
 LabelEditModalController = Ember.ObjectController.extend
   newCategoryDisplayed: false
+  creatingCategory: false
+  oldCategory: null
 
   modelChanged: (->
-    @set 'oldCategory', @get('category')
-  ).observes('category')
+    @set 'oldCategory', @get('model.category')
+  ).observes('model')
 
   categoryAdded: (->
-    lastCategory = @get('project.categories.lastObject')
+    return unless @get('creatingCategory')
+    @set('creatingCategory', false)
+
+    lastCategory = @get('model.project.categories.lastObject')
     @get('model').set('category', lastCategory)
     @set('newCategoryDisplayed', false)
-  ).observes('project.categories.[]')
+  ).observes('model.project.categories.[]')
 
   actions:
     cancel: ->
@@ -33,7 +38,8 @@ LabelEditModalController = Ember.ObjectController.extend
       @set('newCategoryDisplayed', true)
 
     createNewCategory: (categoryName) ->
-      @get('project').then (project) =>
+      @get('model.project').then (project) =>
+        @set('creatingCategory', true)
         @send('createCategory', categoryName, project)
 
 `export default LabelEditModalController;`
