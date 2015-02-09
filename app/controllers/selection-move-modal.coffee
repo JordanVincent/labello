@@ -3,9 +3,15 @@
 SelectionMoveModalController = Ember.ObjectController.extend
   needs: 'project'
   project: Ember.computed.alias('controllers.project')
+  oldLabel: null
+  label: null
+  newLabel: null
 
   modelChanged: (->
-    @set 'oldLabel', @get('model.label')
+    return unless @get('model')
+    @get('model.label').then (label) =>
+      @set 'oldLabel', label
+      @set 'newLabel', label
   ).observes('model')
 
   actions:
@@ -14,14 +20,18 @@ SelectionMoveModalController = Ember.ObjectController.extend
       @get('oldLabel').get('selections').addObject(selection)
       selection.save().then =>
         @send('closeModal')
+        @set('model', null)
 
     save: ->
       selection = @get('model')
       selection.save().then =>
-        selection.get('label.selections').addObject(selection)
-        selection.save().then =>
-          @send('closeModal')
+        @get('oldLabel').get('selections').removeObject(selection)
+        @get('oldLabel').save().then =>
 
-      # TODO remove from old label
+          newLabel = @get('newLabel')
+          newLabel.get('selections').addObject(selection)
+          newLabel.save().then =>
+            @send('closeModal')
+            @set('model', null)
 
 `export default SelectionMoveModalController;`
