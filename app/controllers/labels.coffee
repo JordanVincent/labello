@@ -1,18 +1,14 @@
 `import Ember from 'ember';`
 
 LabelsController = Ember.ArrayController.extend
-  singleLabels: Ember.computed.filterBy('content','category', null)
+  singleLabels: null
 
-  actions:
-    deleteCategory: (category) ->
-      Ember.RSVP.all( category.get('labels').map (label) ->
-        label.set('category', null)
-        label.save()
-      ).then ->
-        project = category.get('project')
-        project.get('categories').removeObject(category)
-        project.save().then ->
-          category.destroyRecord()
-
+  singleLabelsObs: (->
+    Ember.RSVP.all(@get('model').map (label) ->
+      label.get('category').then (category) ->
+        label unless category
+    ).then (singleLabels) =>
+      @set 'singleLabels', singleLabels.compact()
+  ).observes('@each.category')
 
 `export default LabelsController;`

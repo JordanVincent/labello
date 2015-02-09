@@ -6,38 +6,28 @@ DocumentRoute = Ember.Route.extend
 
   afterModel: (model) ->
     model.get('paragraphs').then (paragraphs) ->
-      a = paragraphs.map (paragraph) ->
+      Ember.RSVP.all paragraphs.map (paragraph) ->
         paragraph.get('selections')
-      Ember.RSVP.all(a)
 
   createSelection: (label, paragraph, startPosition, endPosition) ->
-      selection = @store.createRecord 'selection',
-        label: label
-        paragraph: paragraph
-        startPosition: startPosition
-        endPosition: endPosition
+    selection = @store.createRecord 'selection',
+      label: label
+      paragraph: paragraph
+      startPosition: startPosition
+      endPosition: endPosition
 
-      label.get('selections').addObject(selection)
-      paragraph.get('selections').addObject(selection)
+    label.get('selections').addObject(selection)
+    paragraph.get('selections').addObject(selection)
 
-      selection.save().then ->
-        Ember.RSVP.all [label.save(), paragraph.save()]
-
-  deleteSelection: (selection) ->
-    paragraph = selection.get('paragraph')
-    label = selection.get('label')
-    paragraph.get('selections').removeObject(selection)
-    label.get('selections').removeObject(selection)
-
-    Ember.RSVP.all([paragraph.save(), label.save()]).then ->
-      selection.destroyRecord()
+    selection.save().then ->
+      Ember.RSVP.all [label.save(), paragraph.save()]
 
   actions:
     createSelection: (label, paragraph, startPosition, endPosition) ->
       @createSelection(label, paragraph, startPosition, endPosition)
 
     createLabel: (labelName, paragraph, startPosition, endPosition) ->
-      project = @controllerFor('document').get('content.project')
+      project = @modelFor('project')
       label = @store.createRecord 'label',
         name: labelName
         project: project
@@ -51,23 +41,9 @@ DocumentRoute = Ember.Route.extend
           @createSelection(label, paragraph, startPosition, endPosition)
 
     deleteLabel: (label) ->
-      category = label.get('category')
-      project = label.get('project')
-
-      label.get('selections').then (selections) =>
-        Ember.RSVP.all(selections.map (selection) =>
-          @deleteSelection(selection) # Careful, self destructing array
-        ).then ->
-          category.get('labels').removeObject(label) if category
-          project.get('labels').removeObject(label)
-
-          promises = [project.save()]
-          promises.addObject(category.save()) if category
-
-          Ember.RSVP.all(promises).then ->
-            label.destroyRecord()
+      label.destroyRecordAndRelations()
 
     deleteSelection: (selection) ->
-      @deleteSelection(selection)
+      selection.destroyRecordAndRelations()
 
 `export default DocumentRoute`

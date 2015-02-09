@@ -11,7 +11,7 @@
 
   <div class="form-group">
     <label for="inputCategory">Category</label>
-    {{view "select" value=category content=project.categories optionLabelPath="content.name" prompt="No category selected" class="form-control" id="inputCategory"}}
+    {{view "select" value=newCategory content=project.categories optionLabelPath="content.name" prompt="No category selected" class="form-control" id="inputCategory"}}
   </div>
 
   {{#if newCategoryDisplayed}}
