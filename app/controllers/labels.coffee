@@ -11,4 +11,8 @@ LabelsController = Ember.ArrayController.extend
       @set 'singleLabels', singleLabels.compact().sortBy('name')
   ).observes('@each.category')
 
+  actions:
+    editLabel: (label) ->
+      @send 'openModal', 'label-edit-modal', label
+
 `export default LabelsController;`

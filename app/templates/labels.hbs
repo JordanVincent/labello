@@ -9,10 +9,7 @@
           <button {{action 'editCategory' this}} class="btn btn-default btn-xs pull-right edit-btn">Edit</button>
         </div>
         {{#each sortedLabels}}
-          {{#link-to 'label' this class="label-item" tagName="div"}}
-            {{name}}
-            <span class="badge pull-right">{{selections.length}}</span>
-          {{/link-to}}
+          {{label-item label=this editLabel="editLabel"}}
         {{/each}}
       {{/each}}
 
@@ -22,10 +19,7 @@
         {{/if}}
       {{/if}}
       {{#each singleLabels}}
-        {{#link-to 'label' this class="label-item" tagName="div"}}
-          {{name}}
-          <span class="badge pull-right">{{selections.length}}</span>
-        {{/link-to}}
+        {{label-item label=this editLabel="editLabel"}}
       {{else}}
         {{#unless categories}}
           <div class="label-item" ><em>No labels yet</em></div>

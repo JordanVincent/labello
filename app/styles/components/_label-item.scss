@@ -1,0 +1,21 @@
+.label-item {
+  padding: 10px 15px 10px 35px;
+  cursor: pointer;
+  position: relative;
+
+  &:hover .btn {
+    display: block;
+  }
+
+  .badge {
+    color: $gray-light;
+    background-color: transparent;
+  }
+
+  .btn {
+    display: none;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+  }
+}

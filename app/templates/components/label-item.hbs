@@ -1,0 +1,7 @@
+{{#with label}}
+  {{#link-to 'label' this class="label-item" tagName="div"}}
+    {{name}}
+    <span class="badge pull-right">{{selections.length}}</span>
+    <button {{action 'editLabel'}} class="btn btn-default btn-xs pull-right edit-btn">Edit</button>
+  {{/link-to}}
+{{/with}}
