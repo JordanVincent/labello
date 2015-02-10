@@ -17,10 +17,10 @@ LabelsRoute = Ember.Route.extend
 
     newCategory: ->
       category = @store.createRecord('category')
-      @send 'openModal', 'new-category-modal', category
+      @send 'openModal', 'category-new-modal', category
 
     newLabel: ->
       label = @store.createRecord('label')
-      @send 'openModal', 'new-label-modal', label
+      @send 'openModal', 'label-new-modal', label
 
 `export default LabelsRoute`

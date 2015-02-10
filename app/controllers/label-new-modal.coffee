@@ -1,6 +1,6 @@
 `import Ember from 'ember';`
 
-NewCategoryModalController = Ember.ObjectController.extend
+LabelNewModalController = Ember.ObjectController.extend
   needs: 'project'
   project: Ember.computed.alias('controllers.project.model')
 
@@ -11,14 +11,14 @@ NewCategoryModalController = Ember.ObjectController.extend
         @set('model', null)
 
     save: ->
-      category = @get('model')
+      label = @get('model')
       project = @get('project')
 
-      category.set('project', project)
-      category.save().then =>
-        project.get('categories').addObject(category)
+      label.set('project', project)
+      label.save().then =>
+        project.get('labels').addObject(label)
         project.save().then =>
           @send('closeModal')
           @set('model', null)
 
-`export default NewCategoryModalController;`
+`export default LabelNewModalController;`
