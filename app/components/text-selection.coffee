@@ -4,17 +4,35 @@ TextSelection = Ember.Component.extend
   classNames: ['text-selection']
   popoverTop: 0
   popoverLeft: 0
+  popoverPosition: 'bottom'
   popoverDisplayed: false
   currentSelection: null
   newLabelName: null
 
   popoverStyle: (->
-    'top: ' + @get('popoverTop') + 'px; left: ' + (@get('popoverLeft') - 150) + 'px;'
+    'top: ' + @get('popoverTop') + 'px; left: ' + @get('popoverLeft') + 'px;'
   ).property('popoverTop', 'popoverLeft')
 
+  popoverArrowStyle: ( ->
+    leftPostion = if @get('popoverLeft') <= 10 then '20%' else '50%'
+    'left: ' + leftPostion + ';'
+  ).property('popoverLeft')
+
   showPopover: (event) ->
-    @set('popoverTop', event.clientY)
-    @set('popoverLeft', event.clientX)
+    popoverWidth = 300
+    popoverHeight = 300
+    popoverTop = event.clientY
+    popoverLeft = event.clientX - popoverWidth/2
+
+    if (popoverTop + popoverHeight > $(window).height())
+      popoverTop = popoverTop - popoverHeight
+      @set('popoverPosition', 'top')
+    else @set('popoverPosition', 'bottom')
+
+    popoverLeft = if popoverLeft < 0 then 10 else popoverLeft
+
+    @set 'popoverTop', popoverTop
+    @set 'popoverLeft', popoverLeft
     @set('popoverDisplayed', true)
 
   dismissSelection: (event) ->
