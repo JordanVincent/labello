@@ -1,20 +1,25 @@
 <div {{bind-attr style=popoverStyle class=":popover :bottom popoverDisplayed:show"}}>
   <div class="arrow"></div>
   <div class="popover-content">
+
     <ul class="list-group">
       {{#each labels}}
         <li class="list-group-item" {{action 'selectLabel' this}}>{{name}}</li>
       {{/each}}
     </ul>
 
-    <div class="input-group">
-      {{input value=newLabelName class="form-control" placeholder="New label"}}
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button" {{action 'createLabel' newLabelName}}>Create</button>
-      </span>
-    </div>
+    <form {{action 'createLabel' newLabelName on='submit'}}>
+      <div class="input-group">
+        {{input value=newLabelName class="form-control" placeholder="New label"}}
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">Create</button>
+        </span>
+      </div>
+    </form>
+
   </div>
 </div>
+
 <div {{action 'dismiss'}}>
   {{#each paragraphs}}
     {{view 'paragraph' value=this tagName=tagName selection="selection"}}

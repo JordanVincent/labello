@@ -22,7 +22,7 @@ ProjectNewDocumentRoute = Ember.Route.extend
       document: doc
 
   actions:
-    save: (doc) ->
+    saveDocument: (doc) ->
       paragraphs = @generateParagraphs(doc)
 
       project = @controllerFor('project').get('content')
@@ -33,6 +33,8 @@ ProjectNewDocumentRoute = Ember.Route.extend
       ).then =>
         doc.save().then =>
           project.save().then =>
+            controller = @controllerFor('project.newDocument')
+            controller.set('isProcessing', false)
             @transitionTo('project')
 
 `export default ProjectNewDocumentRoute`
