@@ -21,10 +21,11 @@ ProjectRoute = Ember.Route.extend
 
   projectToCSV: (project) ->
     project.get('labels').then (labels) =>
+      console.log(labels.get('length'))
       Ember.RSVP.all(labels.map (label) ->
         label.get('selections').then (selections) ->
-          selections.map (selection) ->
-            selection.get('csv')
+          Ember.RSVP.all selections.map (selection) ->
+            selection.toCsv()
       ).then (labelsSelectionsCVS) =>
         flat = []
         labelsSelectionsCVS.forEach (labelSelectionsCVS) ->

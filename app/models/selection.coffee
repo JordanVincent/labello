@@ -14,15 +14,24 @@ Selection = DS.Model.extend
     @get('paragraph.text').slice(@get('startPosition'), @get('endPosition'))
   ).property('paragraph', 'paragraph.text', 'startPosition', 'endPosition')
 
-  csv: ( ->
-    categoryName = @get('label.category.name')
-    [
-      (if categoryName then categoryName else ''),
-      @get('label.name'),
-      @get('paragraph.document.title'),
-      @get('text')
-    ]
-  ).property('text', 'label.name', 'label.category.name', 'paragraph.document.title')
+  toCsv: ->
+    Ember.RSVP.all([
+      @get('label')
+      @get('paragraph')
+    ]).then (resolved) =>
+      label = resolved.objectAt(0)
+      paragraph = resolved.objectAt(1)
+
+      paragraph.get('document').then (doc) =>
+        label.get('category').then (category) =>
+          categoryName = if category then category.get('name') else ''
+
+          [
+            categoryName
+            label.get('name')
+            doc.get('title')
+            @get('text')
+          ]
 
   destroyRecordAndRelations: ->
     Ember.RSVP.all([
