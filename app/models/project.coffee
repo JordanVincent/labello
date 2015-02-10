@@ -7,7 +7,7 @@ Project = DS.Model.extend
   labels: DS.hasMany('label', {async: true})
   name: DS.attr()
 
-  labelsSorting: ['name']
+  labelsSorting: ['category.name','name']
   sortedLabels: Ember.computed.sort('labels','labelsSorting')
 
   categoriesSorting: ['name']
