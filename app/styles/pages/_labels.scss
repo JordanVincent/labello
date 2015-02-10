@@ -14,6 +14,22 @@
   .labels-pane {
     width: 20%;
     border-right: 1px solid $gray-lighter;
+    padding-bottom: 34px;
+    position: relative;
+
+    .inner {
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    .btn-toolbar {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background-color: $gray-lighter;
+      margin: 0;
+      padding: 5px 10px;
+    }
   }
 
   .label-pane {
@@ -42,6 +58,11 @@
   .label-item {
     padding: 10px 15px 10px 35px;
     cursor: pointer;
+
+    .badge {
+      color: $gray-light;
+      background-color: transparent;
+    }
   }
 
   .category-item {

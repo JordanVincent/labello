@@ -1,33 +1,42 @@
 <div id="labels">
   <div class="pane labels-pane">
-    {{#each categories}}
-      <div class="category-item">
-        {{name}}
-        <button {{action 'deleteCategory' this}} class="btn btn-default btn-xs pull-right delete-btn">Delete</button>
-      </div>
-      {{#each sortedLabels}}
+
+    <div class="inner">
+      {{#each categories}}
+        <div class="category-item">
+          {{name}}
+          <button {{action 'deleteCategory' this}} class="btn btn-default btn-xs pull-right delete-btn">Delete</button>
+        </div>
+        {{#each sortedLabels}}
+          {{#link-to 'label' this class="label-item" tagName="div"}}
+            {{name}}
+            <span class="badge pull-right">{{selections.length}}</span>
+          {{/link-to}}
+        {{/each}}
+      {{/each}}
+
+      {{#if categories}}
+        {{#if singleLabels}}
+          <div class="category-item">Single labels</div>
+        {{/if}}
+      {{/if}}
+      {{#each singleLabels}}
         {{#link-to 'label' this class="label-item" tagName="div"}}
           {{name}}
           <span class="badge pull-right">{{selections.length}}</span>
         {{/link-to}}
+      {{else}}
+        {{#unless categories}}
+          <div class="label-item" ><em>No labels yet</em></div>
+        {{/unless}}
       {{/each}}
-    {{/each}}
+    </div>
 
-    {{#if categories}}
-      {{#if singleLabels}}
-        <div class="category-item">Single labels</div>
-      {{/if}}
-    {{/if}}
-    {{#each singleLabels}}
-      {{#link-to 'label' this class="label-item" tagName="div"}}
-        {{name}}
-        <span class="badge pull-right">{{selections.length}}</span>
-      {{/link-to}}
-    {{else}}
-      {{#unless categories}}
-        <div class="label-item" ><em>No labels yet</em></div>
-      {{/unless}}
-    {{/each}}
+    <div class="btn-toolbar" role="toolbar">
+      <button class="btn btn-xs btn-default" {{action 'newCategory'}}>New Category</button>
+      <button class="btn btn-xs btn-default" {{action 'newLabel'}}>New Label</button>
+    </div>
+
   </div>
   <div class="pane label-pane">
     {{outlet}}
