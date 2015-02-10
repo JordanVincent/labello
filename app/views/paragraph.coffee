@@ -10,11 +10,10 @@ ParagraphView = Em.View.extend
     @setContent()
   ).observes('value.text', 'value.selections.[]', 'value.selections.@each.label')
 
-  mouseUp: (event) ->
-
+  click: (event) ->
     selection = document.getSelection()
-    console.log selection
     return unless @isSelectionValid(selection)
+    event.stopPropagation()
 
     offestPos = 0
     flag = false

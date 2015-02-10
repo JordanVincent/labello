@@ -23,7 +23,8 @@ TextSelection = Ember.Component.extend
 
   actions:
     dismiss: ->
-      console.log 'dismiss'
+      return unless @get('popoverDisplayed')
+      @dismissSelection()
 
     selection: (paragraph, startPos, endPos, event) ->
       @set 'currentSelection', Ember.Object.create
