@@ -5,7 +5,7 @@
         {{name}}
         <button {{action 'deleteCategory' this}} class="btn btn-default btn-xs pull-right delete-btn">Delete</button>
       </div>
-      {{#each labels}}
+      {{#each sortedLabels}}
         {{#link-to 'label' this class="label-item" tagName="div"}}
           {{name}}
           <span class="badge pull-right">{{selections.length}}</span>

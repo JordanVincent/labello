@@ -8,7 +8,7 @@ LabelsController = Ember.ArrayController.extend
       label.get('category').then (category) ->
         label unless category
     ).then (singleLabels) =>
-      @set 'singleLabels', singleLabels.compact()
+      @set 'singleLabels', singleLabels.compact().sortBy('name')
   ).observes('@each.category')
 
 `export default LabelsController;`

@@ -1,9 +1,9 @@
 <div id="document">
   <div class="pane paragraphs-pane">
-    {{text-selection paragraphs=paragraphs labels=project.labels createSelection="createSelection" createLabel="createLabel"}}
+    {{text-selection paragraphs=paragraphs labels=project.sortedLabels createSelection="createSelection" createLabel="createLabel"}}
   </div>
   <div class="pane labels-pane">
-    {{#each project.labels}}
+    {{#each project.sortedLabels}}
       <div class="panel panel-default project-label">
         <div class="panel-heading">
           {{#if category}}{{view 'colored-text' color=color text=category.name}}&nbsp;/&nbsp;{{/if}}{{view 'colored-text' color=color text=name}}&nbsp;

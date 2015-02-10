@@ -1,10 +1,17 @@
 `import DS from "ember-data";`
+`import Ember from "ember";`
 
 Project = DS.Model.extend
   documents: DS.hasMany('document', {async: true})
   categories: DS.hasMany('category', {async: true})
   labels: DS.hasMany('label', {async: true})
   name: DS.attr()
+
+  labelsSorting: ['name']
+  sortedLabels: Ember.computed.sort('labels','labelsSorting')
+
+  categoriesSorting: ['name']
+  sortedCategories: Ember.computed.sort('categories','categoriesSorting')
 
   # TODO destroy labels and categories
   destroyRecordAndRelations: ->

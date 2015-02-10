@@ -5,6 +5,9 @@ Category = DS.Model.extend
   labels: DS.hasMany('label', {async: true})
   name: DS.attr()
 
+  labelsSorting: ['name']
+  sortedLabels: Ember.computed.sort('labels','labelsSorting')
+
   # We don't destroy labels
   destroyRecordAndRelations: ->
     Ember.RSVP.all(@get('labels').toArray().map (label) =>
