@@ -19,8 +19,10 @@ TextSelection = Ember.Component.extend
   ).property('popoverLeft')
 
   showPopover: (event) ->
+    @set('popoverDisplayed', true)
+
     popoverWidth = 300
-    popoverHeight = 300
+    popoverHeight = @$('.popover').height() + 10
     popoverTop = event.clientY
     popoverLeft = event.clientX - popoverWidth/2
 
@@ -33,7 +35,6 @@ TextSelection = Ember.Component.extend
 
     @set 'popoverTop', popoverTop
     @set 'popoverLeft', popoverLeft
-    @set('popoverDisplayed', true)
 
   dismissSelection: (event) ->
     @set('currentSelection', null)
