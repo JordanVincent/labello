@@ -49,7 +49,8 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     ENV.googleAnalytics = {
-      webPropertyId: 'UA-59451798-1'
+      webPropertyId: 'UA-59451798-1',
+      tracker : 'analytics.js'
     }
   }
 
