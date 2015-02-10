@@ -71,12 +71,16 @@
     background-color: $list-group-hover-bg;
 
     &:hover {
-      .delete-btn {
+      .btn {
         display: block;
       }
     }
-    .delete-btn {
+    .btn {
       display: none;
+    }
+
+    .delete-btn {
+      margin-left: 5px;
     }
   }
 }

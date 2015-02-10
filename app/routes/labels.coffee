@@ -12,6 +12,9 @@ LabelsRoute = Ember.Route.extend
     deleteCategory: (category) ->
       category.destroyRecordAndRelations()
 
+    editCategory: (category) ->
+      @send 'openModal', 'category-edit-modal', category
+
     newCategory: ->
       category = @store.createRecord('category')
       @send 'openModal', 'new-category-modal', category
