@@ -21,7 +21,7 @@ TextSelection = Ember.Component.extend
   showPopover: (event) ->
     @set('popoverDisplayed', true)
 
-    popoverWidth = 300
+    popoverWidth = @$('.popover').width()
     popoverHeight = @$('.popover').height() + 10
     popoverTop = event.clientY
     popoverLeft = event.clientX - popoverWidth/2

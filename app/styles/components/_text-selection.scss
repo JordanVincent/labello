@@ -2,7 +2,8 @@
 
   .popover {
     position: absolute;
-    width: 300px;
+    width: 400px;
+    max-width: none;
 
     .list-group {
       max-height: 200px;
