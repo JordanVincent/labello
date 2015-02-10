@@ -8,6 +8,11 @@ Label = DS.Model.extend
   name: DS.attr()
   color: DS.attr()
 
+  fullName: (->
+    categoryName = @get('category.name')
+    if categoryName then categoryName + ' / ' + @get('name') else @get('name')
+  ).property('name', 'category.name')
+
   destroyRecordAndRelations: ->
     Ember.RSVP.all([
       @get('category')

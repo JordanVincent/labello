@@ -5,7 +5,7 @@
     <ul class="list-group">
       {{#each labels}}
         <li class="list-group-item" {{action 'selectLabel' this}}>
-          {{#if category}}{{category.name}}&nbsp;/&nbsp;{{/if}}{{name}}
+          {{fullName}}
         </li>
       {{/each}}
     </ul>
