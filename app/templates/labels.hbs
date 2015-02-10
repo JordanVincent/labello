@@ -13,14 +13,20 @@
       {{/each}}
     {{/each}}
 
-    <div class="category-item">Single labels</div>
+    {{#if categories}}
+      {{#if singleLabels}}
+        <div class="category-item">Single labels</div>
+      {{/if}}
+    {{/if}}
     {{#each singleLabels}}
       {{#link-to 'label' this class="label-item" tagName="div"}}
         {{name}}
         <span class="badge pull-right">{{selections.length}}</span>
       {{/link-to}}
     {{else}}
-      <div class="label-item" >No labels yet</div>
+      {{#unless categories}}
+        <div class="label-item" ><em>No labels yet</em></div>
+      {{/unless}}
     {{/each}}
   </div>
   <div class="pane label-pane">
