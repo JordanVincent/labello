@@ -31,7 +31,6 @@ DocumentRoute = Ember.Route.extend
       label = @store.createRecord 'label',
         name: labelName
         project: project
-        category: null
         color: Please.make_color()
 
       project.get('labels').addObject(label)
