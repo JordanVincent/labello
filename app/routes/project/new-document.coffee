@@ -2,7 +2,7 @@
 
 ProjectNewDocumentRoute = Ember.Route.extend
   model: (params) ->
-    @store.createRecord('document', { text: '', title: 'Untilted Document'})
+    @store.createRecord('document')
 
   generateParagraphs: (doc) ->
     text = '<div>' + doc.get('text') + '</div>'
@@ -33,8 +33,6 @@ ProjectNewDocumentRoute = Ember.Route.extend
       ).then =>
         doc.save().then =>
           project.save().then =>
-            controller = @controllerFor('project.newDocument')
-            controller.set('isProcessing', false)
             @transitionTo('project')
 
 `export default ProjectNewDocumentRoute`

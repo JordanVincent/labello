@@ -4,18 +4,7 @@
 
 @import "template/bootswatch";
 
-
-html, body {
-  margin: 0;
-  height: 100%;
-}
-
-body { padding-top: 60px; }
-
-.glyphicon-refresh {
-  animation: spin 2s infinite linear;
-  -webkit-animation: spin 2s infinite linear;
-}
+@import "base";
 
 @import "views/contenteditable";
 @import "components/text-selection";
@@ -27,14 +16,3 @@ body { padding-top: 60px; }
 @import "pages/label";
 @import "pages/selection";
 @import "pages/document";
-
-
-@-webkit-keyframes spin {
-  from { -webkit-transform: rotate(0deg); }
-  to { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-  from { transform:rotate(0deg); }
-  to { transform:rotate(360deg); }
-}

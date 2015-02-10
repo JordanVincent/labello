@@ -2,12 +2,16 @@
   <div class="row" id="project-new-document">
     <div class="col-md-6">
       <form {{action 'save' this on='submit'}}>
-        <div class="form-group">
+        <div {{bind-attr class=":form-group showErrors::hide-error errors.title:has-error"}}>
           {{input value=title class="form-control" placeholder="Document title"}}
         </div>
 
-        Paste the content of the document here:
-        {{view 'contenteditable' value=text}}
+        <div {{bind-attr class=":form-group showErrors::hide-error errors.text:has-error"}}>
+          <label class="control-label">
+            Paste the content of the document here:
+          </label>
+          {{view 'contenteditable' value=text class="form-control"}}
+        </div>
 
         <div class="btn-toolbar">
           {{link-to 'Cancel' 'project.index' class="btn btn-default"}}
@@ -18,7 +22,11 @@
               &nbsp;Processing
             </button>
           {{else}}
-            <button class="btn btn-primary" type="submit">Save</button>
+            {{#if showErrors}}
+              <button class="btn btn-danger">Error</button>
+            {{else}}
+              <button class="btn btn-primary" type="submit">Save</button>
+            {{/if}}
           {{/if}}
 
         </div>
