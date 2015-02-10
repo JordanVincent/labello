@@ -4,8 +4,15 @@
     position: absolute;
     width: 300px;
 
+    .list-group {
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
     .list-group-item {
       cursor: pointer;
+      padding: 5px 15px;
+
       &:hover {
         background-color: $list-group-hover-bg;
       }

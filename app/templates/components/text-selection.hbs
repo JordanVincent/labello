@@ -2,7 +2,9 @@
   <div class="arrow"></div>
   <div class="popover-content">
     <ul class="list-group">
-      {{#each labels}}<li class="list-group-item" {{action 'selectLabel' this}}>{{name}}</li>{{/each}}
+      {{#each labels}}
+        <li class="list-group-item" {{action 'selectLabel' this}}>{{name}}</li>
+      {{/each}}
     </ul>
 
     <div class="input-group">
