@@ -81,6 +81,10 @@ ParagraphView = Em.View.extend
     groupedSelections = @groupSelectionsByPosition(@get('value.selections'), 'startPosition')
     @openTags(groupedSelections, options)
 
+    # close last tags
+    groupedEndingSelections = @groupSelectionsByPosition(options.startedSelections, 'endPosition')
+    @closeTags(groupedEndingSelections, options)
+
     # ending
     options.html += options.text.slice(options.prevPosition)
 
@@ -117,8 +121,7 @@ ParagraphView = Em.View.extend
       options.startedSelections.removeObjects(selections)
 
       spanTag = '</span>'
-      console.log('eee')
-      spanTag += @openingSpanTag(selections) if options.startedSelections.get('length')
+      spanTag += @openingSpanTag(options.startedSelections) if options.startedSelections.get('length')
 
       options.html += beforeText + spanTag
       options.prevPosition = position
@@ -127,14 +130,13 @@ ParagraphView = Em.View.extend
     className = selections.mapBy('id').join(' ')
 
     color = selections.get('lastObject.label.color')
-    
     color = color[0] if Ember.isArray(color) #fix
-    
+
     if selections.get('length') > 1
       otherColor = selections.get('firstObject.label.color')
       otherColor = otherColor[0] if Ember.isArray(otherColor) #fix
       color = $.xcolor.combine color, otherColor
-      console.log color
+
     "<span class=\"#{className}\" style=\"color:#{color};\">"
 
   setContentOld: ->
