@@ -8,6 +8,7 @@ Selection = DS.Model.extend
   endPosition: DS.attr()
 
   document: Ember.computed.alias('paragraph.document')
+  color: Ember.computed.alias('label.color')
 
   text: ( ->
     return '' unless @get('paragraph.text')

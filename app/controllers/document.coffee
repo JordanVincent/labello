@@ -10,6 +10,13 @@ DocumentController = Ember.ObjectController.extend
 
     $('.paragraphs-pane').scrollTop(x)
 
+  scrollToListElement: ($elem) ->
+    elemOffset = $elem.offset().top
+    offset = $('.labels-pane .inner').offset().top
+    x = elemOffset - offset
+
+    $('.labels-pane').scrollTop(x)
+
   actions:
     editLabel: (label) ->
       @send 'openModal', 'label-edit-modal', label
@@ -17,10 +24,18 @@ DocumentController = Ember.ObjectController.extend
     moveSelection: (selection) ->
       @send 'openModal', 'selection-move-modal', selection
 
+    # From the list
     selectSelection: (selection) ->
-      $elem = $('#' + selection.get('id'))
+      $elem = $('.paragraphs-pane .selection-' + selection.get('id'))
       return if Ember.isBlank($elem);
       @set('selectedSelection', selection)
-      @scrollToElement($elem)
+      @scrollToElement($($elem[0]))
+
+    # From the text
+    selectionSelected: (selection) ->
+      $elem = $('.labels-pane .selection-' + selection.get('id'))
+      return if Ember.isBlank($elem);
+      @set('selectedSelection', selection)
+      @scrollToListElement($($elem[0]))
 
 `export default DocumentController;`

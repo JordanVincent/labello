@@ -64,4 +64,7 @@ TextSelection = Ember.Component.extend
       @dismissSelection()
       @set('newLabelName', null)
 
+    selectionSelected: (selection) ->
+      @sendAction('selectionSelected', selection)
+
 `export default TextSelection;`
