@@ -127,7 +127,9 @@ ParagraphView = Em.View.extend
       options.prevPosition = position
 
   openingSpanTag: (selections) ->
-    className = selections.mapBy('id').join(' ')
+    className = selections.map( (selection) ->
+      'selection-' + selection.get('id')
+    ).join(' ')
 
     color = selections.get('lastObject.label.color')
     color = color[0] if Ember.isArray(color) #fix

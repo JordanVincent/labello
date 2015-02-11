@@ -18,9 +18,9 @@ DocumentController = Ember.ObjectController.extend
       @send 'openModal', 'selection-move-modal', selection
 
     selectSelection: (selection) ->
-      $elem = $('.' + selection.get('id'))
+      $elem = $('.selection-' + selection.get('id'))
       return if Ember.isBlank($elem);
       @set('selectedSelection', selection)
-      @scrollToElement($elem)
+      @scrollToElement($($elem[0]))
 
 `export default DocumentController;`
