@@ -57,7 +57,7 @@
 
   .category-item {
     font-weight: bold;
-    padding: 5px 15px;
+    padding: 2px 15px;
     background-color: $list-group-hover-bg;
 
     &:hover {
@@ -67,6 +67,8 @@
     }
     .btn {
       display: none;
+      top: -1px;
+      position: relative;
     }
 
     .delete-btn {
