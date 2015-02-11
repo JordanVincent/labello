@@ -27,7 +27,6 @@ ParagraphView = Em.View.extend
       endPos = buffer
 
     console.log 'select', startPos, '-', endPos, selection
-
     @get('parentView').send('selection', @get('value'), startPos, endPos, event)
 
   posOffset: (node) ->
@@ -50,68 +49,83 @@ ParagraphView = Em.View.extend
   isSelectionValid: (selection) ->
     selection.type is 'Range'
 
-  sfd: (selections, posType) ->
-    multipleSelections = []
+  # Groups selections per position, depending on posType = {'startPosition', 'endPosition'}
+  # return ex [
+  #   selections: [selectionA, selectionB]
+  #   position: 56
+  # ,
+  #   selections: [selectionC, selectionD]
+  #   position: 85
+  # ]
+  groupSelectionsByPosition: (selections, posType) ->
+    groupedSelections = []
     selections.forEach (selection) ->
-      multipleSelection = multipleSelections.findBy('position', selection.get(posType))
+      groupedSelection = groupedSelections.findBy('position', selection.get(posType))
 
-      if multipleSelection
-        multipleSelection.selections.pushObject(selection)
+      if groupedSelection
+        groupedSelection.selections.pushObject(selection)
       else
-        multipleSelections.pushObject
+        groupedSelections.pushObject
           position: selection.get(posType)
           selections: [selection]
 
-    multipleSelections
+    groupedSelections
 
   setContent: ->
-    html = ''
-    text = @get('value.text')
-    startedSelections = []
-    prevPosition = 0
-    multipleStartingSelections = @sfd(@get('value.selections'), 'startPosition')
-    console.log 'multipleStartingSelections', multipleStartingSelections, text
+    options =
+      html: ''
+      text: @get('value.text')
+      startedSelections: []
+      prevPosition: 0
 
-    multipleStartingSelections.sortBy('position').forEach (multipleSelection) =>
-      selections = multipleSelection.selections
-      position   = multipleSelection.position
-
-      endingSelections = startedSelections.sortBy('endPosition').filter (selection) ->
-        selection.get('endPosition') <= position
-      multipleEndingSelections = @sfd(endingSelections, 'endPosition')
-
-      # zefsef
-      multipleEndingSelections.sortBy('position').forEach (multipleEndingSelection) =>
-        endingSelections = multipleEndingSelection.selections
-        endingPosition   = multipleEndingSelection.position
-
-        endingBeforeText = text.slice(prevPosition, endingPosition)
-        startedSelections.removeObjects(endingSelections)
-
-        endingTag = '</span>'
-        if startedSelections.get('length')
-          className = startedSelections.mapBy('id').join(' ')
-          endingTag += '<span class="' + className + '"style="color:' + startedSelections.get('lastObject.label.color') + ';">'
-        html+= endingBeforeText + endingTag
-        prevPosition = endingPosition
-      # end zefsef
-
-      beforeText = text.slice(prevPosition, position)
-      endTag = ''
-      endTag = '</span>' if startedSelections.get('length')
-
-      startedSelections.addObjects(selections)
-      className = startedSelections.mapBy('id').join(' ')
-      spanTag = '<span class="' + className + '" style="color:' + startedSelections.get('lastObject.label.color') + ';">'
-      html += beforeText + endTag + spanTag
-
-      prevPosition = position
+    groupedSelections = @groupSelectionsByPosition(@get('value.selections'), 'startPosition')
+    @openTags(groupedSelections, options)
 
     # ending
-    end = text.slice(prevPosition)
-    html += end
+    options.html += options.text.slice(options.prevPosition)
 
-    @$().html(html)
+    @$().html(options.html)
+
+  openTags: (groupedSelections, options) ->
+    groupedSelections.sortBy('position').forEach (groupedSelection) =>
+      selections = groupedSelection.selections
+      position   = groupedSelection.position
+
+      # close tags
+      endingSelections = options.startedSelections.filter (selection) ->
+        selection.get('endPosition') <= position
+      groupedEndingSelections = @groupSelectionsByPosition(endingSelections, 'endPosition')
+      @closeTags(groupedEndingSelections, options)
+
+      # open tag
+      beforeText = options.text.slice(options.prevPosition, position)
+      endTag =  if options.startedSelections.get('length') then '</span>' else ''
+
+      options.startedSelections.addObjects(selections)
+
+      spanTag = @openingSpanTag(options.startedSelections)
+      options.html += beforeText + endTag + spanTag
+
+      options.prevPosition = position
+
+  closeTags: (groupedSelections, options) ->
+    groupedSelections.sortBy('position').forEach (groupedSelection) =>
+      selections = groupedSelection.selections
+      position   = groupedSelection.position
+
+      beforeText = options.text.slice(options.prevPosition, position)
+      options.startedSelections.removeObjects(selections)
+
+      spanTag = '</span>'
+      spanTag += @openingSpanTag(selections) if options.startedSelections.get('length')
+
+      options.html += beforeText + spanTag
+      options.prevPosition = position
+
+  openingSpanTag: (selections) ->
+    className = selections.mapBy('id').join(' ')
+    color = selections.get('lastObject.label.color')
+    "<span class=\"#{className}\" style=\"color:#{color};\">"
 
   setContentOld: ->
     html = ''
