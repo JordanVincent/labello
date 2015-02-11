@@ -117,6 +117,7 @@ ParagraphView = Em.View.extend
       options.startedSelections.removeObjects(selections)
 
       spanTag = '</span>'
+      console.log('eee')
       spanTag += @openingSpanTag(selections) if options.startedSelections.get('length')
 
       options.html += beforeText + spanTag
@@ -124,7 +125,16 @@ ParagraphView = Em.View.extend
 
   openingSpanTag: (selections) ->
     className = selections.mapBy('id').join(' ')
+
     color = selections.get('lastObject.label.color')
+    
+    color = color[0] if Ember.isArray(color) #fix
+    
+    if selections.get('length') > 1
+      otherColor = selections.get('firstObject.label.color')
+      otherColor = otherColor[0] if Ember.isArray(otherColor) #fix
+      color = $.xcolor.combine color, otherColor
+      console.log color
     "<span class=\"#{className}\" style=\"color:#{color};\">"
 
   setContentOld: ->
