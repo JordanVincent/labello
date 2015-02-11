@@ -1,4 +1,5 @@
 `import Ember from "ember";`
+`import DS from "ember-data";`
 
 ProjectRoute = Ember.Route.extend
   model: (params) ->
@@ -39,5 +40,20 @@ ProjectRoute = Ember.Route.extend
         csvString = csv.encode()
         name = project.get('name')
         @downloadCSV(name, csvString)
+
+    downloadProject: ->
+      project = @modelFor('project')
+      type = @store.modelFor('project');
+      serializer = DS.LSSerializer.create()
+      adapter = DS.LSAdapter.create({namespace: 'ee'})
+
+      a = serializer.serialize(project)
+      console.log @myStore
+      console.log(a)
+      @myStore.push('project',@myStore.normalize('project',a))
+      
+      # b = des.extract(@store, type, a, 'ee', 'single')
+      # console.log a, b
+      # @store.push('project', b)
 
 `export default ProjectRoute`
