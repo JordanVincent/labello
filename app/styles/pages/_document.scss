@@ -33,20 +33,4 @@
       }
     }
   }
-  .selection {
-    cursor: pointer;
-
-    &:hover {
-      background-color: $list-group-hover-bg;
-      .btn {
-        display: inline-block;
-      }
-    }
-    .btn {
-      display: none;
-      &.delete-btn {
-        margin-left: 5px;
-      }
-    }
-  }
 }

@@ -11,8 +11,18 @@ ParagraphView = Em.View.extend
   ).observes('value.text', 'value.selections.[]',
     'value.selections.@each.label', 'value.selections.@each.color')
 
+  selectionSelected: (selection) ->
+    anchorOffestPos = @posOffset(selection.anchorNode)
+    selection = @get('value.selections').find (selection) ->
+      selection.get('startPosition') <= anchorOffestPos and
+      selection.get('endPosition') >= anchorOffestPos
+
   click: (event) ->
     selection = document.getSelection()
+
+    selectedSelection = @selectionSelected(selection)
+    @get('parentView').send('selectionSelected', selectedSelection) if selectedSelection
+
     return unless @isSelectionValid(selection)
     event.stopPropagation()
 

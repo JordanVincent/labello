@@ -1,30 +1,28 @@
 <div id="document">
   <div class="pane paragraphs-pane">
-    {{text-selection paragraphs=paragraphs labels=project.sortedLabels createSelection="createSelection" createLabel="createLabel"}}
+    {{text-selection paragraphs=paragraphs labels=project.sortedLabels createSelection="createSelection" createLabel="createLabel" selectionSelected="selectionSelected"}}
   </div>
   <div class="pane labels-pane">
-    {{#each project.sortedLabels}}
-      <div class="panel panel-default project-label">
-        <div class="panel-heading">
-          {{#if category}}{{view 'colored-text' color=color text=category.name}}&nbsp;/&nbsp;{{/if}}{{view 'colored-text' color=color text=name}}&nbsp;
-          <span class="badge">{{selections.length}}</span>
-          <button class="btn btn-default btn-xs delete-btn pull-right" {{action 'deleteLabel' this}}>Delete</button>
-          <button class="btn btn-default btn-xs edit-btn pull-right" {{action 'editLabel' this}}>Edit</button>
-        </div>
+    <div class="inner">
+      {{#each project.sortedLabels}}
+        <div class="panel panel-default project-label">
+          <div class="panel-heading">
+            {{#if category}}{{view 'colored-text' color=color text=category.name}}&nbsp;/&nbsp;{{/if}}{{view 'colored-text' color=color text=name}}&nbsp;
+            <span class="badge">{{selections.length}}</span>
+            <button class="btn btn-default btn-xs delete-btn pull-right" {{action 'deleteLabel' this}}>Delete</button>
+            <button class="btn btn-default btn-xs edit-btn pull-right" {{action 'editLabel' this}}>Edit</button>
+          </div>
 
-        <ul class="list-group">
-          {{#each selections}}
-            <li class="list-group-item selection" {{action 'selectSelection' this}}>
-              {{text}}
-              <button {{action 'deleteSelection' this}} class="btn btn-default btn-xs pull-right delete-btn">Delete</button>
-              <button {{action 'moveSelection' this}} class="btn btn-default btn-xs pull-right">Move</button>
-            </li>
-          {{/each}}
-        </ul>
-      </div>
-    {{else}}
-      <div class="alert alert-info" role="alert">Tip: try to select some text.</div>
-    {{/each}}
+          <ul class="list-group">
+            {{#each selections}}
+              {{selection-item selection=this selectedSelection=controller.selectedSelection deleteSelection="deleteSelection" selectSelection="selectSelection" moveSelection="moveSelection"}}
+            {{/each}}
+          </ul>
+        </div>
+      {{else}}
+        <div class="alert alert-info" role="alert">Tip: try to select some text.</div>
+      {{/each}}
+    </div>
 
   </div>
 </div>
