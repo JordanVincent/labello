@@ -1,7 +1,7 @@
 {{#with selection}}
-  <li {{bind-attr class=":list-group-item :selection-item view.isSelected:active view.selectionClassName"}} {{action 'selectSelection' this}}>
+  <div {{action 'selectSelection' this}}>
     {{text}}
     <button {{action 'deleteSelection' this}} class="btn btn-default btn-xs pull-right delete-btn">Delete</button>
     <button {{action 'moveSelection' this}} class="btn btn-default btn-xs pull-right">Move</button>
-  </li>
+  </div>
 {{/with}}
