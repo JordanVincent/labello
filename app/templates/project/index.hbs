@@ -15,7 +15,8 @@
           {{#each documents}}
             <li class="list-group-item">
               {{link-to title 'document' this}}
-              <button class="btn btn-default btn-xs pull-right" {{action 'deleteDocument' this}}>Delete</button>
+              <button class="btn btn-default btn-xs delete-btn pull-right" {{action 'deleteDocument' this}}>Delete</button>
+              <button class="btn btn-default btn-xs pull-right" {{action 'editDocument' this}}>Edit</button>
             </li>
           {{else}}
             <li class="list-group-item">

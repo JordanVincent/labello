@@ -1,6 +1,5 @@
 <div id="selection">
-  {{paragraph.text}}
+  {{view 'paragraph' paragraph=paragraph activeSelections=activeSelections tagName=paragraph.tagName}}
   <hr>
-
   {{document.title}} - {{link-to 'See document' 'document' paragraph.document}}
 </div>

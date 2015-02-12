@@ -21,7 +21,7 @@ LabelsRoute = Ember.Route.extend
 
     newLabel: ->
       label = @store.createRecord 'label',
-        color: Please.make_color()
+        color: Please.make_color()[0]
       @send 'openModal', 'label-new-modal', label
 
 `export default LabelsRoute`

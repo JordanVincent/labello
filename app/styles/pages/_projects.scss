@@ -1,0 +1,52 @@
+#projects {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  margin-top: -60px;
+  padding-top: 60px;
+
+
+  h1, h2 {
+    display: inline-block;
+    background-color: white;
+    padding: 0px 15px;
+  }
+
+  h1 {
+    font-size: 4em;
+  }
+
+  h2 {
+    color: $gray-light;
+    padding: 5px 15px;
+    margin: 0;
+  }
+
+  h3 {
+    margin-top: 0;
+  }
+
+  .background-pane, .info-pane {
+    float: left;
+    height: 100%;
+    position: relative;
+    overflow-y: auto;
+  }
+
+  .background-pane {
+    width: 75%;
+    background-image: url('/assets/images/background.jpg');
+    background-size: 100%;
+
+    .inner {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 50px 0 0 50px;
+    }
+  }
+
+  .info-pane {
+    width: 25%;
+    padding: 15px;
+  }
+}

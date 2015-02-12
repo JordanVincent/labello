@@ -1,37 +1,47 @@
 {{nav-bar}}
 
-<div class="container-fluid" id="projects">
+<div id="projects">
 
-  <div class="row" >
-    <div class="col-md-4">
-      <h1>Labello<br><small>A simple and free text analysis tool</small></h1>
-      <p>Labello is still in development. I actively recommend to use a recent web browser.<br>Feel free to <a href="https://github.com/JordanVincent/labello/issues" target="_blank">report issues</a> and give <a href="mailto:jordanv1@uw.edu" target="_blank">feedbacks</a>.</p>
-      <p><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Everything is saved on your browser. You'll have to use the same computer to access your projects.</p>
-      <p>The features include:</p>
-      <ul>
-        <li>Multiple document import</li>
-        <li>Labeling/indexing</li>
-        <li>High level categories</li>
-        <li>CSV export</li>
-      </ul>
-    </div>
-    <div class="col-md-4">
-      <h3>Projects</h3>
-      <hr>
-
-      <ul class="list-group">
-        {{#each}}
-          <li class="list-group-item">
-            {{link-to name 'project' this}}
-            <button class="btn btn-default btn-xs pull-right" {{action 'deleteProject' this}}>Delete</button>
-          </li>
-        {{/each}}
-      </ul>
-      {{#unless length}}
-        <p>No projects yet, add one!</p>
-      {{/unless}}
-
-      <button class="btn btn-primary" {{action 'newProject'}}>New project</button>
+  <div class="background-pane">
+    <div class="inner">
+      <h1>Labello</h1><br>
+      <h2>A simple and free text analysis tool</h2>
     </div>
   </div>
+
+  <div class="info-pane">
+    <h3>Projects</h3>
+
+    <ul class="list-group">
+      {{#each}}
+        <li class="list-group-item">
+          {{link-to name 'project' this}}
+          <button class="btn btn-default btn-xs pull-right" {{action 'deleteProject' this}}>Delete</button>
+        </li>
+      {{/each}}
+    </ul>
+    {{#unless length}}
+      <p>No projects yet, add one!</p>
+    {{/unless}}
+
+    <button class="btn btn-primary" {{action 'newProject'}}>New project</button>
+
+    <hr>
+
+    <p>The features include:</p>
+    <ul>
+      <li>Multiple document import</li>
+      <li>Labeling/indexing</li>
+      <li>High level categories</li>
+      <li>CSV export</li>
+      <li><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Now supports multi labels!</li>
+    </ul>
+
+    <hr>
+
+    <p>Labello is still in development. I actively recommend to use a recent web browser.<br>Feel free to <a href="https://github.com/JordanVincent/labello/issues" target="_blank">report issues</a> and give <a href="mailto:jordanv1@uw.edu" target="_blank">feedbacks</a>.</p>
+    <p><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Everything is saved on your browser. You'll have to use the same computer to access your projects.</p>
+
+  </div>
+
 </div>

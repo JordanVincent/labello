@@ -6,57 +6,155 @@ ParagraphView = Em.View.extend
   didInsertElement: ->
     @setContent()
 
-  valueChanged: (->
+  paragraphChanged: (->
     @setContent()
-  ).observes('value.text', 'value.selections.[]', 'value.selections.@each.label')
+  ).observes('paragraph.text', 'activeSelections.[]',
+    'activeSelections.@each.label', 'activeSelections.@each.color')
+
+  selectionClicked: (selection) ->
+    anchorOffestPos = @posOffset(selection.anchorNode)
+    selection = @get('activeSelections').find (selection) ->
+      selection.get('startPosition') <= anchorOffestPos and
+      selection.get('endPosition') >= anchorOffestPos
+
+  textClicked: (selection) ->
+    selectedSelection = @selectionClicked(selection)
+    return unless selectedSelection
+    @get('parentView').send('selectionSelected', selectedSelection)
 
   click: (event) ->
     selection = document.getSelection()
-    return unless @isSelectionValid(selection)
+
+    if @isSelectionValid(selection)
+      @textSelected(event, selection)
+    else @textClicked(selection)
+
+  textSelected: (event, selection) ->
     event.stopPropagation()
 
-    offestPos = 0
+    startPos = selection.anchorOffset + @posOffset(selection.anchorNode)
+    endPos   = selection.extentOffset + @posOffset(selection.extentNode)
+
+    # Inverse positions
+    if startPos > endPos
+      buffer   = startPos
+      startPos = endPos
+      endPos   = buffer
+
+    @get('parentView').send('selection', @get('paragraph'), startPos, endPos, event)
+
+  posOffset: (node) ->
     flag = false
-    $(selection.anchorNode).parent().contents().each (index, content) ->
-      if $(content).is($(selection.anchorNode)) or flag
+    offsetPos = 0
+
+    $node = $(node)
+    parent = $node.parent()
+    parent = parent.parent() if parent.is('span')
+
+    parent.contents().each (index, content) ->
+
+      if flag or content is node or $(content).contents()[0] is node
         flag = true
       else
-        offestPos += $(content).text().length
+        offsetPos += $(content).text().length
 
-
-    startPos = selection.anchorOffset + offestPos
-    endPos = selection.extentOffset + offestPos
-    if startPos > endPos
-      buffer = startPos
-      startPos = endPos
-      endPos = buffer
-
-    @get('parentView').send('selection', @get('value'), startPos, endPos, event)
+    offsetPos
 
   isSelectionValid: (selection) ->
-    (selection.type is 'Range') and
-    (selection.anchorNode is selection.extentNode)
+    selection.type is 'Range'
+
+  # Groups selections per position, depending on posType = {'startPosition', 'endPosition'}
+  # return ex [
+  #   selections: [selectionA, selectionB]
+  #   position: 56
+  # ,
+  #   selections: [selectionC, selectionD]
+  #   position: 85
+  # ]
+  groupSelectionsByPosition: (selections, posType) ->
+    groupedSelections = []
+    selections.forEach (selection) ->
+      groupedSelection = groupedSelections.findBy('position', selection.get(posType))
+
+      if groupedSelection
+        groupedSelection.selections.pushObject(selection)
+      else
+        groupedSelections.pushObject
+          position: selection.get(posType)
+          selections: [selection]
+
+    groupedSelections
 
   setContent: ->
-    html = @get('value.text')
+    @$().html @buildHtml()
 
-    startPos = []
-    endPos = []
+  buildHtml: ->
+    options =
+      html: ''
+      text: @get('paragraph.text')
+      startedSelections: []
+      prevPosition: 0
 
-    @get('value.selections').sortBy('startPosition').reverse().forEach (selection) =>
+    groupedSelections = @groupSelectionsByPosition(@get('activeSelections'), 'startPosition')
+    @openTags(groupedSelections, options)
 
-      startPos = selection.get('startPosition')
-      endPos = selection.get('endPosition')
-      console.log startPos, '-', endPos
+    # close last tags
+    groupedEndingSelections = @groupSelectionsByPosition(options.startedSelections, 'endPosition')
+    @closeTags(groupedEndingSelections, options)
 
-      start = html.slice(0, startPos)
-      middle = html.slice(startPos, endPos)
-      end = html.slice(endPos)
+    # ending
+    options.html += options.text.slice(options.prevPosition)
 
-      html = start + '<span id="' + selection.get('id') + '" style="color:' + selection.get('label.color') + ';">' + middle + '</span>' + end
+  openTags: (groupedSelections, options) ->
+    groupedSelections.sortBy('position').forEach (groupedSelection) =>
+      selections = groupedSelection.selections
+      position   = groupedSelection.position
 
-    @$().html html
+      # close tags
+      endingSelections = options.startedSelections.filter (selection) ->
+        selection.get('endPosition') <= position
+      groupedEndingSelections = @groupSelectionsByPosition(endingSelections, 'endPosition')
+      @closeTags(groupedEndingSelections, options)
 
+      # open tag
+      beforeText = options.text.slice(options.prevPosition, position)
+      endTag =  if options.startedSelections.get('length') then '</span>' else ''
 
+      options.startedSelections.addObjects(selections)
+
+      spanTag = @openingSpanTag(options.startedSelections)
+      options.html += beforeText + endTag + spanTag
+
+      options.prevPosition = position
+
+  closeTags: (groupedSelections, options) ->
+    groupedSelections.sortBy('position').forEach (groupedSelection) =>
+      selections = groupedSelection.selections
+      position   = groupedSelection.position
+
+      beforeText = options.text.slice(options.prevPosition, position)
+      options.startedSelections.removeObjects(selections)
+
+      spanTag = '</span>'
+      if options.startedSelections.get('length')
+        spanTag += @openingSpanTag(options.startedSelections)
+
+      options.html += beforeText + spanTag
+      options.prevPosition = position
+
+  openingSpanTag: (selections) ->
+    className = selections.map( (selection) ->
+      'selection-' + selection.get('id')
+    ).join(' ')
+
+    color = selections.get('lastObject.label.color')
+    color = color[0] if Ember.isArray(color) #fix
+
+    if selections.get('length') > 1
+      otherColor = selections.get('firstObject.label.color')
+      otherColor = otherColor[0] if Ember.isArray(otherColor) #fix
+      color = $.xcolor.combine color, otherColor
+
+    "<span class=\"#{className}\" style=\"color:#{color};\">"
 
 `export default ParagraphView;`

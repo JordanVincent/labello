@@ -3,12 +3,19 @@
 DocumentController = Ember.ObjectController.extend
   selectedSelection: null
 
-  scrollToElement: ($elem) ->
+  scrollToElement: (container, $elem) ->
     elemOffset = $elem.offset().top
-    offset = $('.text-selection').offset().top
-    x = elemOffset - offset
+    offset = $("#{container} .inner").offset().top
+    y = elemOffset - offset
 
-    $('.paragraphs-pane').scrollTop(x)
+    $(container).scrollTop(y)
+
+  select: (container, selection) ->
+    $elem = $(container + ' .selection-' + selection.get('id'))
+    return if Ember.isBlank($elem);
+
+    @set('selectedSelection', selection)
+    @scrollToElement(container, $($elem[0]))
 
   actions:
     editLabel: (label) ->
@@ -17,10 +24,12 @@ DocumentController = Ember.ObjectController.extend
     moveSelection: (selection) ->
       @send 'openModal', 'selection-move-modal', selection
 
+    # Selected from the list
     selectSelection: (selection) ->
-      $elem = $('#' + selection.get('id'))
-      return if Ember.isBlank($elem);
-      @set('selectedSelection', selection)
-      @scrollToElement($elem)
+      @select('.paragraphs-pane', selection)
+
+    # Selected from the text
+    selectionSelected: (selection) ->
+      @select('.labels-pane', selection)
 
 `export default DocumentController;`

@@ -24,6 +24,6 @@
 
 <div {{action 'dismiss'}}>
   {{#each paragraphs}}
-    {{view 'paragraph' value=this tagName=tagName selection="selection"}}
+    {{view 'paragraph' paragraph=this activeSelections=selections tagName=tagName}}
   {{/each}}
 </div>
