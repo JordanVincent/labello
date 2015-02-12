@@ -11,32 +11,36 @@ ParagraphView = Em.View.extend
   ).observes('value.text', 'value.selections.[]',
     'value.selections.@each.label', 'value.selections.@each.color')
 
-  selectionSelected: (selection) ->
+  selectionClicked: (selection) ->
     anchorOffestPos = @posOffset(selection.anchorNode)
     selection = @get('value.selections').find (selection) ->
       selection.get('startPosition') <= anchorOffestPos and
       selection.get('endPosition') >= anchorOffestPos
 
+  textClicked: (selection) ->
+    selectedSelection = @selectionClicked(selection)
+    return unless selectedSelection
+    @get('parentView').send('selectionSelected', selectedSelection)
+
   click: (event) ->
     selection = document.getSelection()
 
-    selectedSelection = @selectionSelected(selection)
-    @get('parentView').send('selectionSelected', selectedSelection) if selectedSelection
+    if @isSelectionValid(selection)
+      @textSelected(event, selection)
+    else @textClicked(selection)
 
-    return unless @isSelectionValid(selection)
+  textSelected: (event, selection) ->
     event.stopPropagation()
 
-    anchorOffestPos = @posOffset(selection.anchorNode)
-    extentOffestPos = @posOffset(selection.extentNode)
+    startPos = selection.anchorOffset + @posOffset(selection.anchorNode)
+    endPos   = selection.extentOffset + @posOffset(selection.extentNode)
 
-    startPos = selection.anchorOffset + anchorOffestPos
-    endPos = selection.extentOffset + extentOffestPos
+    # Inverse positions
     if startPos > endPos
-      buffer = startPos
+      buffer   = startPos
       startPos = endPos
-      endPos = buffer
+      endPos   = buffer
 
-    console.log 'select', startPos, '-', endPos, selection
     @get('parentView').send('selection', @get('value'), startPos, endPos, event)
 
   posOffset: (node) ->
@@ -82,6 +86,9 @@ ParagraphView = Em.View.extend
     groupedSelections
 
   setContent: ->
+    @$().html @buildHtml()
+
+  buildHtml: ->
     options =
       html: ''
       text: @get('value.text')
@@ -97,8 +104,6 @@ ParagraphView = Em.View.extend
 
     # ending
     options.html += options.text.slice(options.prevPosition)
-
-    @$().html(options.html)
 
   openTags: (groupedSelections, options) ->
     groupedSelections.sortBy('position').forEach (groupedSelection) =>
@@ -131,7 +136,8 @@ ParagraphView = Em.View.extend
       options.startedSelections.removeObjects(selections)
 
       spanTag = '</span>'
-      spanTag += @openingSpanTag(options.startedSelections) if options.startedSelections.get('length')
+      if options.startedSelections.get('length')
+        spanTag += @openingSpanTag(options.startedSelections)
 
       options.html += beforeText + spanTag
       options.prevPosition = position
