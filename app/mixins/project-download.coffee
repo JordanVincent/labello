@@ -1,6 +1,6 @@
 `import Ember from 'ember';`
 
-FileManager = Ember.Mixin.create
+ProjectDownload = Ember.Mixin.create
 
   downloadProject: (project) ->
     extract = @initExtract()
@@ -16,7 +16,9 @@ FileManager = Ember.Mixin.create
     @extractModel('document', extract, json)
     @extractModel('label', extract, json)
 
-    console.log json, extract
+    extract
+
+  # Private
 
   accessJson: ->
     JSON.parse(localStorage['labello'])
@@ -54,4 +56,4 @@ FileManager = Ember.Mixin.create
         records: {}
     extract
 
-`export default FileManager;`
+`export default ProjectDownload;`

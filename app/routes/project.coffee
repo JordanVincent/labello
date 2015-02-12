@@ -1,7 +1,8 @@
 `import Ember from "ember";`
-`import FileManager from '../mixins/file-manager';`
+`import ProjectDownload from '../mixins/project-download';`
+`import ProjectUpload from '../mixins/project-upload';`
 
-ProjectRoute = Ember.Route.extend FileManager,
+ProjectRoute = Ember.Route.extend ProjectDownload, ProjectUpload,
   model: (params) ->
     @store.find('project', params.project_id)
 
@@ -42,18 +43,9 @@ ProjectRoute = Ember.Route.extend FileManager,
 
     downloadProject: ->
       project = @modelFor('project')
-      return @downloadProject(project)
-      type = @store.modelFor('project');
-      serializer = DS.LSSerializer.create()
-      adapter = DS.LSAdapter.create({namespace: 'ee'})
+      json = @downloadProject(project)
+      console.log json
+      return @uploadProject(json)
 
-      a = serializer.serialize(project)
-      console.log(a)
-      a.id = 'rrr'
-      @store.push('project',@store.normalize('project',a))
-
-      # b = des.extract(@store, type, a, 'ee', 'single')
-      # console.log a, b
-      # @store.push('project', b)
 
 `export default ProjectRoute`
