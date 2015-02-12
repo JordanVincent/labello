@@ -1,7 +1,7 @@
 `import Ember from "ember";`
-`import DS from "ember-data";`
+`import FileManager from '../mixins/file-manager';`
 
-ProjectRoute = Ember.Route.extend
+ProjectRoute = Ember.Route.extend FileManager,
   model: (params) ->
     @store.find('project', params.project_id)
 
@@ -42,6 +42,7 @@ ProjectRoute = Ember.Route.extend
 
     downloadProject: ->
       project = @modelFor('project')
+      return @downloadProject(project)
       type = @store.modelFor('project');
       serializer = DS.LSSerializer.create()
       adapter = DS.LSAdapter.create({namespace: 'ee'})
