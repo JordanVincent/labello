@@ -6,14 +6,14 @@ ParagraphView = Em.View.extend
   didInsertElement: ->
     @setContent()
 
-  valueChanged: (->
+  paragraphChanged: (->
     @setContent()
-  ).observes('value.text', 'value.selections.[]',
-    'value.selections.@each.label', 'value.selections.@each.color')
+  ).observes('paragraph.text', 'activeSelections.[]',
+    'activeSelections.@each.label', 'activeSelections.@each.color')
 
   selectionClicked: (selection) ->
     anchorOffestPos = @posOffset(selection.anchorNode)
-    selection = @get('value.selections').find (selection) ->
+    selection = @get('activeSelections').find (selection) ->
       selection.get('startPosition') <= anchorOffestPos and
       selection.get('endPosition') >= anchorOffestPos
 
@@ -41,7 +41,7 @@ ParagraphView = Em.View.extend
       startPos = endPos
       endPos   = buffer
 
-    @get('parentView').send('selection', @get('value'), startPos, endPos, event)
+    @get('parentView').send('selection', @get('paragraph'), startPos, endPos, event)
 
   posOffset: (node) ->
     flag = false
@@ -91,11 +91,11 @@ ParagraphView = Em.View.extend
   buildHtml: ->
     options =
       html: ''
-      text: @get('value.text')
+      text: @get('paragraph.text')
       startedSelections: []
       prevPosition: 0
 
-    groupedSelections = @groupSelectionsByPosition(@get('value.selections'), 'startPosition')
+    groupedSelections = @groupSelectionsByPosition(@get('activeSelections'), 'startPosition')
     @openTags(groupedSelections, options)
 
     # close last tags
