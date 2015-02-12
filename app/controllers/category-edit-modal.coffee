@@ -1,16 +1,6 @@
 `import Ember from 'ember';`
+`import RecordEditModalController from '../mixins/record-edit-modal';`
 
-categoryEditModalController = Ember.ObjectController.extend
+CategoryEditModalController = Ember.ObjectController.extend(RecordEditModalController)
 
-  actions:
-    cancel: ->
-      @get('model').rollback()
-      @send('closeModal')
-      @set('model', null)
-
-    save: ->
-      @get('model').save().then =>
-        @send('closeModal')
-        @set('model', null)
-
-`export default categoryEditModalController;`
+`export default CategoryEditModalController;`

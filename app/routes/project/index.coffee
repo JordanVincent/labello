@@ -6,6 +6,9 @@ ProjectIndexRoute = Ember.Route.extend
     deleteDocument: (doc) ->
       doc.destroyRecordAndRelations()
 
+    editDocument: (doc) ->
+      @send 'openModal', 'document-edit-modal', doc
+
     saveProject: ->
       @modelFor('project').save()
 

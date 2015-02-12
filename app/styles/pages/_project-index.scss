@@ -1,3 +1,9 @@
 #project-index {
   margin-top: 20px;
+
+  .list-group-item {
+    .delete-btn {
+      margin-left: 5px;
+    }
+  }
 }
