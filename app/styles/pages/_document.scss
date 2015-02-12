@@ -20,6 +20,18 @@
   .labels-pane {
     width: 38%;
     padding: 15px;
+
+    .panel-heading{
+      padding: 5px 15px;
+    }
+
+    .selection-item{
+      padding: 5px 15px;
+    }
+
+    .panel {
+      margin-bottom: 10px;
+    }
   }
 
   .project-label {
