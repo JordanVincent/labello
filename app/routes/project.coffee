@@ -22,7 +22,6 @@ ProjectRoute = Ember.Route.extend
 
   projectToCSV: (project) ->
     project.get('labels').then (labels) =>
-      console.log(labels.get('length'))
       Ember.RSVP.all(labels.map (label) ->
         label.get('selections').then (selections) ->
           Ember.RSVP.all selections.map (selection) ->
@@ -48,10 +47,10 @@ ProjectRoute = Ember.Route.extend
       adapter = DS.LSAdapter.create({namespace: 'ee'})
 
       a = serializer.serialize(project)
-      console.log @myStore
       console.log(a)
-      @myStore.push('project',@myStore.normalize('project',a))
-      
+      a.id = 'rrr'
+      @store.push('project',@store.normalize('project',a))
+
       # b = des.extract(@store, type, a, 'ee', 'single')
       # console.log a, b
       # @store.push('project', b)
