@@ -5,7 +5,6 @@ ProjectUpload = Ember.Mixin.create
   uploadProject: (json) ->
     @prefixJson(json).then =>
       console.log(json)
-      # @store.pushPayload(json)
       @createRecords(json)
 
 
@@ -36,13 +35,14 @@ ProjectUpload = Ember.Mixin.create
         records = json[modelName].records
         buffer = {}
         for key, jsonRecord of records
-          buffer[@addPrefix(prefix,key)] = @prefixModel(modelName, jsonRecord, prefix)
+          buffer[@addPrefix(prefix, key)] = @prefixModel(modelName, jsonRecord, prefix)
 
         json[modelName].records = buffer
 
 
   addPrefix: (prefix, id) ->
-    prefix + '-' + id
+    realId = id.split('-')[0]
+    realId + '-' + prefix
 
   prefixModel: (modelName, json, prefix) ->
     json.id = @addPrefix(prefix, json.id) # prefix id
@@ -66,14 +66,13 @@ ProjectUpload = Ember.Mixin.create
 
   availablePrefix: (projectId, counter) ->
     deferred = Ember.RSVP.defer()
-    prefix = projectId + counter
-    console.log('prefix', prefix)
-    @store.find('project', @addPrefix(prefix, projectId)).then (project) =>
+
+    @store.find('project', @addPrefix(counter, projectId)).then (project) =>
       counter++
-      @availablePrefix(projectId, counter).then (prefix) ->
-        deferred.resolve(prefix)
+      @availablePrefix(projectId, counter).then (counter) ->
+        deferred.resolve(counter)
     .catch ->
-      deferred.resolve(prefix)
+      deferred.resolve(counter)
 
     deferred.promise
 
