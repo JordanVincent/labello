@@ -3,19 +3,34 @@
 ProjectUpload = Ember.Mixin.create
 
   uploadProject: (json) ->
-    @prefixJson(json).then ->
+    @prefixJson(json).then =>
       console.log(json)
+      # @store.pushPayload(json)
+      @createRecords(json)
+
+
+  createRecords: (json) ->
+    @getModelNames().forEach (modelName) =>
+      return unless json[modelName]
+      records = json[modelName].records
+      for key, jsonRecord of records
+        @createRecord(modelName, jsonRecord)
+
+  createRecord: (modelName, jsonRecord) ->
+    type = @store.modelFor(modelName)
+    record = @store.push(type, jsonRecord)
+    console.log record
+    record.save()
+
 
   # Private
   prefixJson: (json) ->
-    prefix = ''
     projectId = Object.keys(json.project.records)[0]
-    modelNames = ['project', 'document', 'label', 'category', 'paragraph', 'selection']
 
     @availablePrefix(projectId, 0).then (prefix) =>
       console.log prefix
 
-      modelNames.forEach (modelName) =>
+      @getModelNames().forEach (modelName) =>
 
         return unless json[modelName]
         records = json[modelName].records
@@ -51,20 +66,23 @@ ProjectUpload = Ember.Mixin.create
 
   availablePrefix: (projectId, counter) ->
     deferred = Ember.RSVP.defer()
-    newId = projectId + counter
-
-    @store.find('project', newId).then (project) =>
+    prefix = projectId + counter
+    console.log('prefix', prefix)
+    @store.find('project', @addPrefix(prefix, projectId)).then (project) =>
       counter++
-      @availablePrefix(projectId, counter).then ->
-        deferred.resolve(newId)
+      @availablePrefix(projectId, counter).then (prefix) ->
+        deferred.resolve(prefix)
     .catch ->
-      deferred.resolve(newId)
+      deferred.resolve(prefix)
 
     deferred.promise
 
   modelRelationships: (modelName) ->
     model = @store.modelFor(modelName)
     Ember.get(model, 'relationshipsByName')
+
+  getModelNames: ->
+    ['project', 'document', 'label', 'category', 'paragraph', 'selection']
 
 
 
