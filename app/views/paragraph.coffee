@@ -20,7 +20,7 @@ ParagraphView = Em.View.extend
   textClicked: (selection) ->
     selectedSelection = @selectionClicked(selection)
     return unless selectedSelection
-    @get('parentView').send('selectionSelected', selectedSelection)
+    @get('controller').send('selectionSelected', selectedSelection)
 
   click: (event) ->
     selection = document.getSelection()

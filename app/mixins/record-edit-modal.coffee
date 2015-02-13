@@ -1,6 +1,6 @@
 `import Ember from 'ember';`
 
-recordEditModalController = Ember.Mixin.create
+RecordEditModalController = Ember.Mixin.create
 
   actions:
     cancel: ->
@@ -13,4 +13,4 @@ recordEditModalController = Ember.Mixin.create
         @send('closeModal')
         @set('model', null)
 
-`export default recordEditModalController;`
+`export default RecordEditModalController;`

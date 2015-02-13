@@ -10,21 +10,29 @@
   </div>
 
   <div class="info-pane">
-    <h3>Projects</h3>
 
-    <ul class="list-group">
-      {{#each}}
-        <li class="list-group-item">
-          {{link-to name 'project' this}}
-          <button class="btn btn-default btn-xs pull-right" {{action 'deleteProject' this}}>Delete</button>
-        </li>
-      {{/each}}
-    </ul>
-    {{#unless length}}
-      <p>No projects yet, add one!</p>
-    {{/unless}}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Projects
+      </div>
+      <ul class="list-group">
+        {{#each}}
+          <li class="list-group-item">
+            {{link-to name 'project' this}}
+            <button class="btn btn-default btn-xs pull-right" {{action 'deleteProject' this}}>Delete</button>
+          </li>
+        {{else}}
+          <li class="list-group-item">
+            <em>No projects yet, create or open one!</em>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
 
-    <button class="btn btn-primary" {{action 'newProject'}}>New project</button>
+    <div class="btn-toolbar">
+      <button class="btn btn-primary" {{action 'newProject'}}>New project</button>
+      <button class="btn btn-default" {{action 'uploadProject'}}>Open a project</button>
+    </div>
 
     <hr>
 
@@ -35,11 +43,12 @@
       <li>High level categories</li>
       <li>CSV export</li>
       <li><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Now supports multi labels!</li>
+      <li><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> And downloading/uploading projects!</li>
     </ul>
 
     <hr>
 
-    <p>Labello is still in development. I actively recommend to use a recent web browser.<br>Feel free to <a href="https://github.com/JordanVincent/labello/issues" target="_blank">report issues</a> and give <a href="mailto:jordanv1@uw.edu" target="_blank">feedbacks</a>.</p>
+    <p>Labello is still in development. I actively recommend to use a recent web browser.<br>Feel free to <a href="https://github.com/JordanVincent/labello/issues" target="_blank">report issues</a> and give <a href="mailto:jordanv1@uw.edu" target="_blank">feedback</a>.</p>
     <p><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Everything is saved on your browser. You'll have to use the same computer to access your projects.</p>
 
   </div>

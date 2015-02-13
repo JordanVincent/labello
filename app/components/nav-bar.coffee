@@ -6,4 +6,10 @@ NavBar = Ember.Component.extend
     exportProject: ->
       @sendAction('exportProject')
 
+    downloadProject: ->
+      @sendAction('downloadProject')
+
+    uploadProject: ->
+      @sendAction('uploadProject')
+
 `export default NavBar;`

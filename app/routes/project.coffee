@@ -1,6 +1,8 @@
 `import Ember from "ember";`
+`import ProjectToJson from '../mixins/project-to-json';`
+`import ProjectToCsv from '../mixins/project-to-csv';`
 
-ProjectRoute = Ember.Route.extend
+ProjectRoute = Ember.Route.extend ProjectToJson, ProjectToCsv,
   model: (params) ->
     @store.find('project', params.project_id)
 
@@ -10,27 +12,15 @@ ProjectRoute = Ember.Route.extend
   csvHeaders: ->
     ["Category","Label","Document","Selection"]
 
-  downloadCSV: (fileName, csv) ->
+  downloadFile: (fileName, fileType, data, fileExtension) ->
+    fileExtension = fileType unless fileExtension
     a = document.createElement('a')
-    a.href = 'data:attachment/csv;charset=utf-8,' + encodeURIComponent(csv)
+    a.href = 'data:attachment/' + fileType + ';charset=utf-8,' + encodeURIComponent(data)
     a.target = '_blank'
-    a.download = "#{fileName}.csv"
+    a.download = "#{fileName}.#{fileExtension}"
 
     document.body.appendChild(a)
     a.click()
-
-  projectToCSV: (project) ->
-    project.get('labels').then (labels) =>
-      console.log(labels.get('length'))
-      Ember.RSVP.all(labels.map (label) ->
-        label.get('selections').then (selections) ->
-          Ember.RSVP.all selections.map (selection) ->
-            selection.toCsv()
-      ).then (labelsSelectionsCVS) =>
-        flat = []
-        labelsSelectionsCVS.forEach (labelSelectionsCVS) ->
-          flat.pushObjects(labelSelectionsCVS)
-        new CSV(flat, {header: @csvHeaders()})
 
   actions:
     exportProject: ->
@@ -38,6 +28,13 @@ ProjectRoute = Ember.Route.extend
       @projectToCSV(project).then (csv) =>
         csvString = csv.encode()
         name = project.get('name')
-        @downloadCSV(name, csvString)
+        @downloadFile(name, 'csv', csvString)
+
+    downloadProject: ->
+      project = @modelFor('project')
+      json = @projectToJson(project)
+      name = project.get('name')
+      @downloadFile(name, 'json', JSON.stringify(json), 'lbo')
+
 
 `export default ProjectRoute`
