@@ -12,11 +12,12 @@ ProjectRoute = Ember.Route.extend ProjectDownload, ProjectUpload,
   csvHeaders: ->
     ["Category","Label","Document","Selection"]
 
-  downloadCSV: (fileName, csv) ->
+  downloadFile: (fileName, fileType, data, fileExtension) ->
+    fileExtension = fileType unless fileExtension
     a = document.createElement('a')
-    a.href = 'data:attachment/csv;charset=utf-8,' + encodeURIComponent(csv)
+    a.href = 'data:attachment/' + fileType + ';charset=utf-8,' + encodeURIComponent(data)
     a.target = '_blank'
-    a.download = "#{fileName}.csv"
+    a.download = "#{fileName}.#{fileExtension}"
 
     document.body.appendChild(a)
     a.click()
@@ -39,13 +40,15 @@ ProjectRoute = Ember.Route.extend ProjectDownload, ProjectUpload,
       @projectToCSV(project).then (csv) =>
         csvString = csv.encode()
         name = project.get('name')
-        @downloadCSV(name, csvString)
+        @downloadFile(name, 'csv', csvString)
 
     downloadProject: ->
       project = @modelFor('project')
       json = @downloadProject(project)
       console.log json
-      return @uploadProject(json)
+      name = project.get('name')
+      @downloadFile(name, 'json', JSON.stringify(json), 'lbo')
+      # return @uploadProject(json)
 
 
 `export default ProjectRoute`
