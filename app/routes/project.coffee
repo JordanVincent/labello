@@ -2,7 +2,7 @@
 `import ProjectDownload from '../mixins/project-download';`
 `import ProjectUpload from '../mixins/project-upload';`
 
-ProjectRoute = Ember.Route.extend ProjectDownload, ProjectUpload,
+ProjectRoute = Ember.Route.extend ProjectDownload,
   model: (params) ->
     @store.find('project', params.project_id)
 
@@ -48,7 +48,6 @@ ProjectRoute = Ember.Route.extend ProjectDownload, ProjectUpload,
       console.log json
       name = project.get('name')
       @downloadFile(name, 'json', JSON.stringify(json), 'lbo')
-      # return @uploadProject(json)
 
 
 `export default ProjectRoute`

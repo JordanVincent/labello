@@ -24,7 +24,10 @@
       <p>No projects yet, add one!</p>
     {{/unless}}
 
-    <button class="btn btn-primary" {{action 'newProject'}}>New project</button>
+    <div class="btn-toolbar">
+      <button class="btn btn-primary" {{action 'newProject'}}>New project</button>
+      <button class="btn btn-default" {{action 'uploadProject'}}>Open a project</button>
+    </div>
 
     <hr>
 
@@ -35,6 +38,7 @@
       <li>High level categories</li>
       <li>CSV export</li>
       <li><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Now supports multi labels!</li>
+      <li><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> And downloading/uploading projects!</li>
     </ul>
 
     <hr>

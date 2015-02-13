@@ -4,23 +4,25 @@ ProjectUpload = Ember.Mixin.create
 
   uploadProject: (json) ->
     @prefixJson(json).then =>
-      console.log(json)
       @createRecords(json)
 
-
   createRecords: (json) ->
+    projectPromise = Ember.RSVP.resolve()
+
     @getModelNames().forEach (modelName) =>
       return unless json[modelName]
       records = json[modelName].records
+
       for key, jsonRecord of records
-        @createRecord(modelName, jsonRecord)
+        promise = @createRecord(modelName, jsonRecord)
+        projectPromise = promise if modelName is 'project'
+
+    projectPromise
 
   createRecord: (modelName, jsonRecord) ->
     type = @store.modelFor(modelName)
     record = @store.push(type, jsonRecord)
-    console.log record
     record.save()
-
 
   # Private
   prefixJson: (json) ->

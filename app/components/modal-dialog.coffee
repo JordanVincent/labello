@@ -1,6 +1,7 @@
 `import Ember from 'ember';`
 
 ModalDialog = Ember.Component.extend
+  saveBtnName: 'Save changes'
 
   actions:
     cancel: ->
