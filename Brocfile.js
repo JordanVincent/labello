@@ -15,6 +15,7 @@ var app = new EmberApp({
 
 app.import('bower_components/comma-separated-values/csv.js');
 app.import('bower_components/pleasejs/src/Please.js');
+app.import('bower_components/xcolor/jquery.xcolor.js');
 
 // Use `app.import` to add additional libraries to the generated
 // output files.
