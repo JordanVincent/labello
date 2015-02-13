@@ -1,10 +1,12 @@
 `import Ember from 'ember';`
 
-ProjectUpload = Ember.Mixin.create
+JsonToProject = Ember.Mixin.create
 
-  uploadProject: (json) ->
+  jsonToProject: (json) ->
     @prefixJson(json).then =>
       @createRecords(json)
+
+  # Private
 
   createRecords: (json) ->
     projectPromise = Ember.RSVP.resolve()
@@ -87,4 +89,4 @@ ProjectUpload = Ember.Mixin.create
 
 
 
-`export default ProjectUpload;`
+`export default JsonToProject;`

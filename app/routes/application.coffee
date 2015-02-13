@@ -1,7 +1,7 @@
 `import Ember from "ember";`
-`import ProjectUpload from '../mixins/project-upload';`
+`import JsonToProject from '../mixins/json-to-project';`
 
-ApplicationRoute = Ember.Route.extend ProjectUpload,
+ApplicationRoute = Ember.Route.extend JsonToProject,
 
   actions:
     openModal: (modalName, model) ->
@@ -29,7 +29,7 @@ ApplicationRoute = Ember.Route.extend ProjectUpload,
       @send 'openModal', 'project-upload-modal'
 
     loadProjectFromJson: (json) ->
-      @uploadProject(json).then (project) =>
+      @jsonToProject(json).then (project) =>
         @send('closeModal')
         @controllerFor('project-upload-modal').set('model', null)
         @transitionTo('project', project)

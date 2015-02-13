@@ -1,8 +1,8 @@
 `import Ember from 'ember';`
 
-ProjectDownload = Ember.Mixin.create
+ProjectToJson = Ember.Mixin.create
 
-  downloadProject: (project) ->
+  projectToJson: (project) ->
     extract = @initExtract()
     json = @accessJson()
     jsonProject = @copyJsonToExtract('project', project.get('id'), extract, json)
@@ -21,7 +21,8 @@ ProjectDownload = Ember.Mixin.create
   # Private
 
   accessJson: ->
-    JSON.parse(localStorage['labello'])
+    namespace = @store.adapterFor('project').get('namespace')
+    JSON.parse(localStorage[namespace])
 
   copyJsonToExtract: (modelName, recordId, extract, json) ->
     jsonStub = json[modelName].records[recordId]
@@ -56,4 +57,4 @@ ProjectDownload = Ember.Mixin.create
         records: {}
     extract
 
-`export default ProjectDownload;`
+`export default ProjectToJson;`

@@ -1,8 +1,8 @@
 `import Ember from "ember";`
-`import ProjectDownload from '../mixins/project-download';`
-`import ProjectUpload from '../mixins/project-upload';`
+`import ProjectToJson from '../mixins/project-to-json';`
+`import ProjectToCsv from '../mixins/project-to-csv';`
 
-ProjectRoute = Ember.Route.extend ProjectDownload,
+ProjectRoute = Ember.Route.extend ProjectToJson, ProjectToCsv,
   model: (params) ->
     @store.find('project', params.project_id)
 
@@ -22,18 +22,6 @@ ProjectRoute = Ember.Route.extend ProjectDownload,
     document.body.appendChild(a)
     a.click()
 
-  projectToCSV: (project) ->
-    project.get('labels').then (labels) =>
-      Ember.RSVP.all(labels.map (label) ->
-        label.get('selections').then (selections) ->
-          Ember.RSVP.all selections.map (selection) ->
-            selection.toCsv()
-      ).then (labelsSelectionsCVS) =>
-        flat = []
-        labelsSelectionsCVS.forEach (labelSelectionsCVS) ->
-          flat.pushObjects(labelSelectionsCVS)
-        new CSV(flat, {header: @csvHeaders()})
-
   actions:
     exportProject: ->
       project = @modelFor('project')
@@ -44,8 +32,7 @@ ProjectRoute = Ember.Route.extend ProjectDownload,
 
     downloadProject: ->
       project = @modelFor('project')
-      json = @downloadProject(project)
-      console.log json
+      json = @projectToJson(project)
       name = project.get('name')
       @downloadFile(name, 'json', JSON.stringify(json), 'lbo')
 

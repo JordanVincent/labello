@@ -21,13 +21,13 @@
             {{link-to name 'project' this}}
             <button class="btn btn-default btn-xs pull-right" {{action 'deleteProject' this}}>Delete</button>
           </li>
+        {{else}}
+          <li class="list-group-item">
+            <em>No projects yet, create or open one!</em>
+          </li>
         {{/each}}
       </ul>
     </div>
-
-    {{#unless length}}
-      <p>No projects yet, add one!</p>
-    {{/unless}}
 
     <div class="btn-toolbar">
       <button class="btn btn-primary" {{action 'newProject'}}>New project</button>
@@ -48,7 +48,7 @@
 
     <hr>
 
-    <p>Labello is still in development. I actively recommend to use a recent web browser.<br>Feel free to <a href="https://github.com/JordanVincent/labello/issues" target="_blank">report issues</a> and give <a href="mailto:jordanv1@uw.edu" target="_blank">feedbacks</a>.</p>
+    <p>Labello is still in development. I actively recommend to use a recent web browser.<br>Feel free to <a href="https://github.com/JordanVincent/labello/issues" target="_blank">report issues</a> and give <a href="mailto:jordanv1@uw.edu" target="_blank">feedback</a>.</p>
     <p><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Everything is saved on your browser. You'll have to use the same computer to access your projects.</p>
 
   </div>
