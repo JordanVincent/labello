@@ -1,6 +1,7 @@
 `import Ember from "ember";`
+`import ProjectUpload from '../mixins/project-upload';`
 
-ApplicationRoute = Ember.Route.extend
+ApplicationRoute = Ember.Route.extend ProjectUpload,
 
   actions:
     openModal: (modalName, model) ->
@@ -23,5 +24,14 @@ ApplicationRoute = Ember.Route.extend
 
       category.save().then ->
         project.save()
+
+    uploadProject: ->
+      @send 'openModal', 'project-upload-modal'
+
+    loadProjectFromJson: (json) ->
+      @uploadProject(json).then (project) =>
+        @send('closeModal')
+        @controllerFor('project-upload-modal').set('model', null)
+        @transitionTo('project', project)
 
 `export default ApplicationRoute`

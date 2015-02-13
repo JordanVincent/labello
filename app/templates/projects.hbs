@@ -10,16 +10,21 @@
   </div>
 
   <div class="info-pane">
-    <h3>Projects</h3>
 
-    <ul class="list-group">
-      {{#each}}
-        <li class="list-group-item">
-          {{link-to name 'project' this}}
-          <button class="btn btn-default btn-xs pull-right" {{action 'deleteProject' this}}>Delete</button>
-        </li>
-      {{/each}}
-    </ul>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Projects
+      </div>
+      <ul class="list-group">
+        {{#each}}
+          <li class="list-group-item">
+            {{link-to name 'project' this}}
+            <button class="btn btn-default btn-xs pull-right" {{action 'deleteProject' this}}>Delete</button>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+
     {{#unless length}}
       <p>No projects yet, add one!</p>
     {{/unless}}

@@ -1,7 +1,6 @@
 `import Ember from "ember";`
-`import ProjectUpload from '../mixins/project-upload';`
 
-ProjectsRoute = Ember.Route.extend ProjectUpload,
+ProjectsRoute = Ember.Route.extend
   model: (params) ->
     @store.find('project')
 
@@ -13,14 +12,5 @@ ProjectsRoute = Ember.Route.extend ProjectUpload,
 
     deleteProject: (project) ->
       project.destroyRecordAndRelations()
-
-    uploadProject: ->
-      @send 'openModal', 'project-upload-modal'
-
-    loadProjectFromJson: (json) ->
-      @uploadProject(json).then (project) =>
-        @send('closeModal')
-        @controllerFor('project-upload-modal').set('model', null)
-        @transitionTo('project', project)
 
 `export default ProjectsRoute`
