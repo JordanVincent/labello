@@ -1,0 +1,55 @@
+#project-matrix {
+
+  .inner {
+    height: 100%;
+    position: absolute;
+    padding-top: 90px;
+    margin-top: -90px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .label-row {
+    flex: 1;
+    overflow: hidden;
+    border-top: 1px solid $gray-lighter;
+    transition: height 0.3s ease;
+
+    &:first-child {
+      border-top: 0;
+    }
+
+    .label-cell, .document-cell {
+      height: 100%;
+      display: inline-block;
+      vertical-align: top;
+      overflow: hidden;
+      padding: 5px 15px;
+    }
+    .label-cell {
+      width: 20%;
+    }
+    .document-cell {
+      width: 30%;
+    }
+  }
+
+  .header {
+    height: 30px;
+    background-color: $gray-lighter;
+    font-weight: bold;
+
+    .label-header, .document-header {
+      height: 100%;
+      display: inline-block;
+      overflow: hidden;
+      padding: 4px 15px;
+    }
+    .label-header {
+      width: 20%;
+    }
+    .document-header {
+      width: 30%;
+    }
+  }
+}

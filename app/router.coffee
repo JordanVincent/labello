@@ -13,5 +13,6 @@ Router.map ->
     @resource 'labels', ->
       @resource 'label', {path: ':label_id'}, ->
         @resource 'selection', {path: 'selection/:selection_id'}
+    @route 'matrix'
 
 `export default Router;`

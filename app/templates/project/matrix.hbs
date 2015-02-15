@@ -1,0 +1,16 @@
+<div id="project-matrix">
+
+  <div class="header">
+    <div class="label-header">Labels</div>
+    {{#each controller.documents}}
+      <div class="document-header">{{title}}</div>
+    {{/each}}
+  </div>
+
+  <div class="inner">
+    {{#each label in model}}
+      {{label-selections documents=controller.documents label=label index=_view.contentIndex selectedIndex=controller.selectedIndex selectLabel="selectLabel"}}
+    {{/each}}
+  </div>
+
+</div>

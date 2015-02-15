@@ -1,0 +1,6 @@
+<div class="label-cell" {{action 'click'}}>{{label.name}}</div>
+{{#each document in documents}}
+  <div class="document-cell">
+    {{document-selections document=document label=label}}
+  </div>
+{{/each}}

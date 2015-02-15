@@ -29,6 +29,7 @@
             </ul>
           </li>
           {{#link-to 'labels' project tagName="li"}}<a href="#">Labels</a>{{/link-to}}
+          {{#link-to 'project.matrix' project tagName="li" title="Red or Blue?"}}<a href="#">Matrix</a>{{/link-to}}
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li {{action 'uploadProject'}}><a href="#">Open</a></li>
