@@ -149,12 +149,16 @@ ParagraphView = Em.View.extend
 
     color = selections.get('lastObject.label.color')
     color = color[0] if Ember.isArray(color) #fix
+    otherColor = color
 
     if selections.get('length') > 1
       otherColor = selections.get('firstObject.label.color')
       otherColor = otherColor[0] if Ember.isArray(otherColor) #fix
-      color = $.xcolor.combine color, otherColor
 
-    "<span class=\"#{className}\" style=\"color:#{color};\">"
+    color = $.xcolor.average(color, otherColor)
+    color.a = 0.5 # alpha channel
+
+    "<span class=\"#{className}\" style=\"background-color:#{color.getCSS()}; " +
+    "border: 1px solid #{color.getCSS()}; border-radius:3px;\">"
 
 `export default ParagraphView;`
