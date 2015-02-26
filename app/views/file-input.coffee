@@ -13,7 +13,7 @@ FileInputView = Ember.TextField.extend
       reader.onload = =>
         fileToUpload = reader.result
         # @get('controller').set(@get('name'), fileToUpload)
-        decodedFile = atob(fileToUpload.replace(/data:;base64,/, ''))
+        decodedFile = decodeURIComponent(escape(atob(fileToUpload.replace(/data:;base64,/, ''))))
         @set('data', decodedFile)
       reader.readAsDataURL(input.files[0])
 
