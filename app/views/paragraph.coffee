@@ -156,6 +156,9 @@ ParagraphView = Em.View.extend
       otherColor = otherColor[0] if Ember.isArray(otherColor) #fix
 
     color = $.xcolor.average(color, otherColor)
+    
+    # BUGFIX: Some selections don't have a label
+    return "<span>" unless color
     color.a = 0.5 # alpha channel
 
     "<span class=\"#{className}\" style=\"background-color:#{color.getCSS()}; " +
