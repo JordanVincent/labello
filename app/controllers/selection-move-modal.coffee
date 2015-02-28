@@ -24,12 +24,14 @@ SelectionMoveModalController = Ember.ObjectController.extend
 
     save: ->
       selection = @get('model')
-      selection.save().then =>
-        @get('oldLabel.selections').removeObject(selection)
-        @get('oldLabel').save().then =>
 
-          @get('newLabel.selections').addObject(selection)
-          @get('newLabel').save().then =>
+      @get('oldLabel.selections').removeObject(selection)
+      @get('oldLabel').save().then =>
+
+        @get('newLabel.selections').addObject(selection)
+        @get('newLabel').save().then =>
+
+          selection.save().then =>
             @send('closeModal')
             @set('model', null)
 
