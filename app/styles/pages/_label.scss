@@ -26,6 +26,10 @@
 
     &:hover {
       background-color: $list-group-hover-bg;
+
+      .document-title {
+        display: none;
+      }
     }
 
     &.active {

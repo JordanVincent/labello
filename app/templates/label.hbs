@@ -3,6 +3,7 @@
     {{#each selections}}
       {{#link-to 'selection' this class="selection-item" tagName="div"}}
         {{text}}
+        <button {{action 'moveSelection' this}} class="btn btn-default btn-xs pull-right move-btn">Move</button>
         <span class="document-title">{{document.title}}</span>
       {{/link-to}}
     {{else}}

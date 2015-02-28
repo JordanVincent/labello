@@ -7,4 +7,7 @@ LabelController = Ember.ObjectController.extend
     selectSelection: (selection) ->
       @set('selectedSelection', selection)
 
+    moveSelection: (selection) ->
+      @send 'openModal', 'selection-move-modal', selection
+
 `export default LabelController;`
